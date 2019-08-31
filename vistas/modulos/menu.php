@@ -17,10 +17,10 @@
  
 			<li>
  
-				<a href="usuarios">
+				<a href="equipos">
  
 					<i class="fa fa-user"></i>
-					<span>Usuarios</span>
+					<span>Equipos</span>
  
 				</a>
  
@@ -28,10 +28,10 @@
  
 			<li>
  
-				<a href="categorias">
+				<a href="calendario">
  
 					<i class="fa fa-th"></i>
-					<span>Categorías</span>
+					<span>Calendario</span>
  
 				</a>
  
@@ -39,10 +39,10 @@
  
 			<li>
  
-				<a href="productos">
+				<a href="noticias">
  
 					<i class="fa fa-product-hunt"></i>
-					<span>Productos</span>
+					<span>Noticias</span>
  
 				</a>
  
@@ -50,67 +50,23 @@
  
 			<li>
  
-				<a href="clientes">
+				<a href="jugadores">
  
 					<i class="fa fa-users"></i>
-					<span>Clientes</span>
+					<span>Plantilla</span>
  
 				</a>
  
 			</li>
  
-			<li class="treeview">
+			<li>
  
-				<a href="#">
+				<a href="notificaciones">
  
-					<i class="fa fa-list-ul"></i>
-					
-					<span>Ventas</span>
-					
-					<span class="pull-right-container">
-					
-						<i class="fa fa-angle-left pull-right"></i>
- 
-					</span>
+					<i class="fa fa-users"></i>
+					<span>Notificaciones</span>
  
 				</a>
- 
-				<ul class="treeview-menu">
-					
-					<li>
- 
-						<a href="ventas">
-							
-							<i class="fa fa-circle-o"></i>
-							<span>Administrar ventas</span>
- 
-						</a>
- 
-					</li>
- 
-					<li>
- 
-						<a href="crear-venta">
-							
-							<i class="fa fa-circle-o"></i>
-							<span>Crear venta</span>
- 
-						</a>
- 
-					</li>
- 
-					<li>
- 
-						<a href="reportes">
-							
-							<i class="fa fa-circle-o"></i>
-							<span>Reporte de ventas</span>
- 
-						</a>
- 
-					</li>
- 
-				</ul>
  
 			</li>
  

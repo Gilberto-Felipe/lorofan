@@ -1,6 +1,6 @@
 <?php 
 
-  session_start();
+  //session_start();
 
 
  ?>
@@ -101,12 +101,12 @@
   =           CUERPO DOCUMENTO            =
   ======================================-->
 
-<body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
+<body class="hold-transition skin-green sidebar-collapse sidebar-mini login-page">
 
 
   <?php
 
-  if (isset($_SESSION['iniciarSesion']) && $_SESSION['iniciarSesion'] == 'ok') {
+//  if (isset($_SESSION['iniciarSesion']) && $_SESSION['iniciarSesion'] == 'ok') {
     
     echo '<div class="wrapper">';
 
@@ -123,45 +123,44 @@
     /*=============================================
     =                CONTENIDO                   =
     =============================================*/ 
-if(isset($_GET["ruta"])){
+    if(isset($_GET["ruta"])){
 
-    if($_GET["ruta"] == "inicio" ||
-       $_GET["ruta"] == "usuarios" ||
-       $_GET["ruta"] == "categorias" ||
-       $_GET["ruta"] == "productos" ||
-       $_GET["ruta"] == "clientes" ||
-       $_GET["ruta"] == "ventas" ||
-       $_GET["ruta"] == "crear-venta" ||
-       $_GET["ruta"] == "reportes" ||
-       $_GET["ruta"] == "salir"){
+      if($_GET["ruta"] == "inicio" ||
+        $_GET["ruta"] == "equipos" ||
+        $_GET["ruta"] == "calendario" ||
+        $_GET["ruta"] == "noticias" ||
+        $_GET["ruta"] == "jugadores" ||
+        $_GET["ruta"] == "notificaciones" ||
+        $_GET["ruta"] == "juego" ||
+        $_GET["ruta"] == "salir"){
 
-      include "modulos/".$_GET["ruta"].".php";
+        include "modulos/".$_GET["ruta"].".php";
 
-    }else{
+      } else{
 
-      include "modulos/404.php";
+        include "modulos/404.php";
+
+      }
+
+    } else{
+
+      include "modulos/inicio.php";
 
     }
 
-  }else{
-
-    include "modulos/inicio.php";
-
-  }
-
-  /*=============================================
-  =                FOOTER                   =
-  =============================================*/ 
-  include "modulos/footer.php";
+    /*=============================================
+    =                FOOTER                   =
+    =============================================*/ 
+    include "modulos/footer.php";
 
 
-  echo '</div>';
+    echo '</div>';
 
-  }else {
+/*  } else {
 
     include "modulos/login.php";
 
-  }
+  }*/
 
   ?>
 
@@ -169,11 +168,11 @@ if(isset($_GET["ruta"])){
 
   <!-- enlaces a js -->
   <script src="vistas/js/plantilla.js"></script>
-  <script src="vistas/js/usuarios.js"></script>
-  <script src="vistas/js/categorias.js"></script>
-  <script src="vistas/js/productos.js"></script>
-  <script src="vistas/js/clientes.js"></script>
-  <script src="vistas/js/ventas.js"></script>
+  <script src="vistas/js/equipos.js"></script>
+  <script src="vistas/js/calendario.js"></script>
+  <script src="vistas/js/noticias.js"></script>
+  <script src="vistas/js/jugadores.js"></script>
+  <script src="vistas/js/notificaciones.js"></script>
 
 </body>
 </html>

@@ -45,7 +45,7 @@
 
 						<?php 
 
-							if ($_SESSION['foto'] != "") {
+							/*if ($_SESSION['foto'] != "") {
 								
 								echo '<img src="'.$_SESSION["foto"].'" class="user-image" alt="imagen usuario por default">';
 
@@ -53,11 +53,11 @@
 
 								echo '<img src="vistas/img/usuarios/default/anonymous.png" class="user-image" alt="imagen usuario por default">';
 
-							}
+							}*/
 
 						 ?>					
 
-						<span class="hidden-xs"><?php echo $_SESSION['nombre']; ?></span>
+						<span class="hidden-xs"><?php /*echo $_SESSION['nombre'];*/ ?></span>
 
 					</a>
 

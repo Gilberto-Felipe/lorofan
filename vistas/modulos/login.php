@@ -43,8 +43,8 @@
 
       <?php 
 
-        $login = new ControladorUsuarios();
-        $login -> ctrIngresoUsuario();
+        // !$login = new ControladorUsuarios();
+        // !$login -> ctrIngresoUsuario();
 
        ?>
 

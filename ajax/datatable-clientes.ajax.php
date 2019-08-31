@@ -40,7 +40,7 @@ class TablaClientes{
 						"'.$clientes[$i]["direccion"].'",
 						"'.$clientes[$i]["fecha_nacimiento"].'",
 						"'.$clientes[$i]["compras"].'",
-						"0000-00-00 00:00:00",
+						"'.$clientes[$i]["ultima_compra"].'",
 						"'.$clientes[$i]["fecha"].'",
 						"'.$botones.'"
 				    ],';
