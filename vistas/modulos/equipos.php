@@ -25,7 +25,7 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-primary" id="btnAgregarEquipo" data-toggle="modal" data-target="#modalAgregarEquipo">Registrar equipo</button>
+        <button class="btn btn-success" id="btnAgregarEquipo" data-toggle="modal" data-target="#modalAgregarEquipo">Registrar equipo</button>
 
       </div>
 
@@ -60,37 +60,36 @@
 
               foreach ($equipos as $key => $value) {
 
-                echo '<tr>
+                echo 
+                  '<tr>
                     
-                        <td>'.($key+1).'</td>
-                        <td>'.$value["alias"].'</td>
-                        <td>'.$value["nombre"].'</td>';
+                    <td>'.($key+1).'</td>
+                    <td>'.$value["alias"].'</td>
+                    <td>'.$value["nombre"].'</td>';
 
-                        if ($value["escudo"] != "") {
-                          
-                          echo '<td><img src="'.$value["escudo"].'" class="img-thumbnail" width="40px"></td>';
+                      if ($value["escudo"] != "") {
+                        
+                        echo '<td><img src="'.$value["escudo"].'" class="img-thumbnail" width="40px"></td>';
 
-                        }else {
+                      }else {
 
-                          echo '<td><img src="vistas/img/equipos/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
+                        echo '<td><img src="vistas/img/equipos/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
 
-                        }
+                      }
 
-                echo   '<td>'.$value["estadio"].'</td>';
+                echo  
+                    '<td>'.$value["estadio"].'</td>
+                    <td>
+                      <div class="btn-group">
+                        
+                        <button class="btn btn-warning btnEditarEquipo" idEquipo="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarEquipo"><i class="fa fa-pencil"></i></button>
 
-                echo   '<td>
-                      
-                          <div class="btn-group">
-                            
-                            <button class="btn btn-warning btnEditarEquipo" idEquipo="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarEquipo"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btnEliminarEquipo" idEquipo="'.$value["id"].'" escudo="'.$value["escudo"].'" equipo="'.$value["alias"].'"><i class="fa fa-times"></i></button>
 
-                            <button class="btn btn-danger btnEliminarEquipo" idEquipo="'.$value["id"].'" escudo="'.$value["escudo"].'" equipo="'.$value["alias"].'"><i class="fa fa-times"></i></button>
+                      </div>
+                    </td> 
 
-                          </div>
-
-                        </td> 
-
-                      </tr>';      
+                  </tr>';
 
               }
 
@@ -125,7 +124,7 @@ MODAL AGREGAR EQUIPO
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+        <div class="modal-header" style="background:#00a65a; color:white">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -193,7 +192,7 @@ MODAL AGREGAR EQUIPO
 
               <p class="help-block">Peso máximo del escudo 2MB</p>
 
-              <img src="vistas/img/escudo/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
+              <img src="vistas/img/equipos/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
 
             </div>
 
@@ -209,7 +208,7 @@ MODAL AGREGAR EQUIPO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar equipo</button>
+          <button type="submit" class="btn btn-success">Guardar equipo</button>
 
         </div>
 
@@ -230,7 +229,7 @@ MODAL AGREGAR EQUIPO
 
 
 <!--=====================================
-MODAL EDITAR USUARIO
+MODAL EDITAR EQUIPO
 ======================================-->
 
 <div id="modalEditarEquipo" class="modal fade" role="dialog">
@@ -245,7 +244,7 @@ MODAL EDITAR USUARIO
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+        <div class="modal-header" style="background:#00a65a; color:white">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -267,7 +266,9 @@ MODAL EDITAR USUARIO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                <input type="hidden" id="idEquipo" name="idEquipo" value="" required>                
 
                 <input type="text" class="form-control input-lg" id="editarAlias" name="editarAlias" value="" required>
 
@@ -283,7 +284,7 @@ MODAL EDITAR USUARIO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" class="form-control input-lg" id="editarNombre" name="editarNombre" value="" readonly>
+                <input type="text" class="form-control input-lg" id="editarEquipo" name="editarEquipo" value="" readonly>
 
               </div>
 
@@ -297,7 +298,7 @@ MODAL EDITAR USUARIO
               
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarEstadio" placeholder="Editar estadio" value="" required>
+                <input type="text" class="form-control input-lg" id="editarEstadio" name="editarEstadio" placeholder="Editar estadio" value="" required>
 
               </div>
 
@@ -331,7 +332,7 @@ MODAL EDITAR USUARIO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Modificar equipo</button>
+          <button type="submit" class="btn btn-success">Modificar equipo</button>
 
         </div>
 
@@ -352,7 +353,6 @@ MODAL EDITAR USUARIO
 
 <?php 
 
-  $borrarEquipo = new ControladorEquipos();
-  $borrarEquipo -> ctrBorrarEquipo();
+  
 
  ?>

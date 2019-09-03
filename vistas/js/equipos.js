@@ -1,8 +1,8 @@
 /*=============================================
-=          SUBIR ESCUDO DE EQUIPO            =
+=          SUBIR ESCUDO DEL EQUIPO            =
 =============================================*/
 
-$(".nuevaFoto").change(function(){
+$(".nuevoEscudo").change(function(){
 
 	let imagen = this.files[0];
 	console.log("imagen", imagen);
@@ -13,7 +13,7 @@ $(".nuevaFoto").change(function(){
 
 	if (imagen["type"] != "image/jpeg"  && imagen["type"] != "image/png") {
 
-		$(".nuevaFoto").val("");
+		$(".nuevoEscudo").val("");
 
 		swal({
 			title: "Error al subir la imagen",
@@ -24,7 +24,7 @@ $(".nuevaFoto").change(function(){
 
 	} else if (imagen["size"] > 2000000 ) {
 
-		$(".nuevaFoto").val("");
+		$(".nuevoEscudo").val("");
 
 		swal({
 			title: "Error al subir la imagen",
@@ -51,19 +51,19 @@ $(".nuevaFoto").change(function(){
 });
 
 /*=============================================
-EDITAR USUARIO
+EDITAR EQUIPO
 =============================================*/
 
-$(".tablas").on("click", ".btnEditarUsuario", function(){
+$(".tablas").on("click", ".btnEditarEquipo", function(){
 
-	let idUsuario = $(this).attr("idUsuario");
-	//console.log("idUsuario", idUsuario);
+	let idEquipo = $(this).attr("idEquipo");
+	//console.log("idEquipo", idEquipo);
 
 	let datos = new FormData();
-	datos.append('idUsuario', idUsuario);
+	datos.append('idEquipo', idEquipo);
 
 	$.ajax({
-		url: 'ajax/usuarios.ajax.php',
+		url: 'ajax/equipos.ajax.php',
 		method: 'POST',
 		data: datos,
 		cache: false, 
@@ -72,93 +72,26 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 		dataType: 'json',
 		success: function(respuesta){
 
-			$('#editarNombre').val(respuesta['nombre']);
-			$('#editarUsuario').val(respuesta['usuario']);
-			$('#editarPerfil').html(respuesta['perfil']);
-			$('#editarPerfil').val(respuesta['perfil']);
-			$('#fotoActual').val(respuesta['foto']);
+			$('#idEquipo').val(respuesta['id']);
+			$('#editarAlias').val(respuesta['alias']);
+			$('#editarEquipo').val(respuesta['nombre']);
+			$('#escudoActual').val(respuesta['escudo']);
 
-			$('#passwordActual').val(respuesta['password']);
+			if (respuesta['escudo'] != "") {
 
-			if (respuesta['foto'] != "") {
+				$(".previsualizar").attr("src", respuesta['escudo']);
 
-				$(".previsualizar").attr("src", respuesta['foto']);
+			} else {
 
-			}else {
-
-				$(".previsualizar").attr("src", "vistas/imagen/usuarios/default/anonymous.png");				
+				$(".previsualizar").attr("src", "vistas/img/equipos/default/anonymous.png");				
 
 			}
+
+			$('#editarEstadio').val(respuesta['estadio']);
 
 		}
 
 	});
-
-});
-
-/*=============================================
-ACTIVAR USUARIO
-=============================================*/
-
-$(".tablas").on("click", ".btnActivar", function(){
-
-	let idUsuario = $(this).attr("idUsuario");
-	let estadoUsuario = $(this).attr("estadoUsuario");
-
-	let datos = new FormData();
-	datos.append('activarId', idUsuario);
-	datos.append('activarUsuario', estadoUsuario);
-
-	$.ajax({
-
-		url: 'ajax/usuarios.ajax.php',
-		method: 'POST',
-		data: datos,
-		cache: false, 
-		contentType: false,
-		processData: false,
-		success: function(respuesta){
-
-	      	if(window.matchMedia("(max-width:767px)").matches){
-
-				swal({
-
-					title: "El usuario ha sido actualizado",
-					type: "success",
-					confirmButtonText: "¡Cerrar!"
-					
-				}).then(function(result) {
-
-					if (result.value) {
-
-					window.location = "usuarios";
-
-				}
-
-				});
-
-			}
-
-
-		}
-
-	});
-
-	if (estadoUsuario == 0) {
-
-		$(this).removeClass('btn-success');
-		$(this).addClass('btn-danger');
-		$(this).html('Desactivado');
-		$(this).attr('estadoUsuario', 1);
-
-	} else{
-
-		$(this).removeClass('btn-danger');
-		$(this).addClass('btn-success');
-		$(this).html('Activado');
-		$(this).attr('estadoUsuario', 0);
-
-	}
 
 });
 
@@ -166,17 +99,17 @@ $(".tablas").on("click", ".btnActivar", function(){
 EVITAR USUARIOS REPETIDOS
 =============================================*/
 
-$("#nuevoUsuario").change(function() {
+$("#nuevoAlias").change(function() {
 
 	$(".alert").remove();
 	
 	let usuario = $(this).val();
 
 	let datos = new FormData();
-	datos.append('validarUsuario', usuario);
+	datos.append('validarAlias', alias);
 
 		$.ajax({
-		url: 'ajax/usuarios.ajax.php',
+		url: 'ajax/equipos.ajax.php',
 		method: 'POST',
 		data: datos,
 		cache: false, 
@@ -187,9 +120,9 @@ $("#nuevoUsuario").change(function() {
 
 			if (respuesta) {
 
-				$("#nuevoUsuario").parent().after('<div class="alert alert-warning">Este usuario ya existe en la base de datos.</div>');
+				$("#nuevoAlias").parent().after('<div class="alert alert-warning">Este alias ya existe en la base de datos.</div>');
 
-				$("#nuevoUsuario").val("");
+				$("#nuevoAlias").val("");
 
 			}
 

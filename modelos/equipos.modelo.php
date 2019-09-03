@@ -43,12 +43,12 @@ class ModeloEquipos{
 
 	static public function mdlRegistrarEquipo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(alias, nombre, escudo, estadio) VALUES(:alias, :nombre, :escudo, :estadio)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(alias, nombre, estadio, escudo) VALUES(:alias, :nombre, :estadio, :escudo)");
 
 		$stmt -> bindParam(":alias", $datos["alias"], PDO::PARAM_STR);
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt -> bindParam(":escudo", $datos["escudo"], PDO::PARAM_STR);
 		$stmt -> bindParam(":estadio", $datos["estadio"], PDO::PARAM_STR);
+		$stmt -> bindParam(":escudo", $datos["escudo"], PDO::PARAM_STR);
 
 		if ($stmt->execute()){
 			
@@ -68,18 +68,18 @@ class ModeloEquipos{
 	}
 
 	/*=============================================
-	EDITAR USUARIO
+	EDITAR EQUIPOS
 	=============================================*/
 
-	static public function mdlEditarUsuario($tabla, $datos){
+	static public function mdleditarEquipo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, password = :password, perfil = :perfil, foto = :foto WHERE usuario = :usuario");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alias = :alias, nombre = :nombre, escudo = :escudo, estadio = :estadio WHERE id = :id");
 
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt -> bindParam(":alias", $datos["alias"], PDO::PARAM_STR);
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt -> bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
-		$stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
-		$stmt -> bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
-		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+		$stmt -> bindParam(":escudo", $datos["escudo"], PDO::PARAM_STR);
+		$stmt -> bindParam(":estadio", $datos["estadio"], PDO::PARAM_STR);
 
 		if ($stmt->execute()){
 			

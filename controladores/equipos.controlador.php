@@ -66,9 +66,9 @@ class ControladorEquipos {
 						GUARDAR IMAGEN EN  DIRECTORIO
 						=============================================*/
 
-						// $aleatorio = mt_rand(100, 999);
+						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias'].".jpg";
+						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias']."/".$aleatorio.".jpg";
 
 						$origen = imagecreatefromjpeg($_FILES['nuevoEscudo']['tmp_name']);
 
@@ -86,9 +86,9 @@ class ControladorEquipos {
 						GUARDAR IMAGEN EN  DIRECTORIO
 						=============================================*/
 
-						// $aleatorio = mt_rand(100, 999);
+						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias'].".png";
+						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias']."/".$aleatorio.".png";
 
 						$origen = imagecreatefrompng($_FILES['nuevoEscudo']['tmp_name']);
 
@@ -115,9 +115,9 @@ class ControladorEquipos {
 					"estadio" => $_POST['nuevoEstadio']
 				);
 
-				var_dump($datos);
+				// var_dump($datos);
 
-				//! $respuesta = ModeloEquipos::mdlRegistrarEquipo($tabla, $datos);
+				$respuesta = ModeloEquipos::mdlRegistrarEquipo($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -126,7 +126,7 @@ class ControladorEquipos {
 					swal({
 
 						type: "success",
-						title: "¡El usuario se ha guardado correctamente!",
+						title: "¡El alias se ha guardado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -135,7 +135,7 @@ class ControladorEquipos {
 
 						if(result.value){
 
-							window.location = "usuarios";
+							window.location = "equipos";
 
 						}
 
@@ -152,7 +152,7 @@ class ControladorEquipos {
 					swal({
 
 						type: "error",
-						title: "¡El usuario no puede ir vacío o llevar caracteres especiales!",
+						title: "¡El alias no puede ir vacío o llevar caracteres especiales!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -161,7 +161,7 @@ class ControladorEquipos {
 
 						if(result.value){
 
-							window.location = "usuarios";
+							window.location = "equipos";
 
 						}
 
@@ -176,38 +176,24 @@ class ControladorEquipos {
 	}
 
 	/*=============================================
-	MOSTRAR USUARIOS              
+	EDITAR EQUIPO              
 	=============================================*/
 
-	static public function ctrMostrarUsuarios($item, $valor){
+	static public function ctrEditarEquipo(){
 
-		$tabla = 'usuarios';
-
-		$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
-
-		return $respuesta;
-
-	}
-
-	/*=============================================
-	EDITAR USUARIOS              
-	=============================================*/
-
-	static public function ctrEditarUsuario(){
-
-		if (isset($_POST["editarUsuario"])) {
+		if (isset($_POST["editarAlias"])) {
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['editarNombre'])){
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ]+$/', $_POST['editarAlias'])){
 
 				/*=============================================
-				VALIDAR IMAGEN USUARIO
+				VALIDAR ESCUDO EQUIPO
 				=============================================*/
 
-				$ruta = $_POST['fotoActual'];
+				$ruta = $_POST['escudoActual'];
 
-				if (isset($_FILES['editarFoto']['tmp_name']) && !empty($_FILES["editarFoto"]["tmp_name"])) {
+				if (isset($_FILES['editarEscudo']['tmp_name']) && !empty($_FILES["editarEscudo"]["tmp_name"])) {
 
-					list($ancho, $alto) = getimagesize($_FILES['editarFoto']['tmp_name']);
+					list($ancho, $alto) = getimagesize($_FILES['editarEscudo']['tmp_name']);
 
 					$nuevoAncho = 500;
 					$nuevoAlto = 500;
@@ -216,27 +202,27 @@ class ControladorEquipos {
 					CREAR DIRECTORIO PARA GUARDAR LA FOTO
 					=============================================*/	
 
-					$directorio = "vistas/img/usuarios/".$_POST['editarUsuario'];
+					$directorio = "vistas/img/equipos/".$_POST['editarAlias'];
 
 					/*=============================================
 					PREGUNTAMOS SI EXISTE OTRA FOTO EN LA BD
 					=============================================*/
 
-					if(!empty($_POST['fotoActual'])){
+					if(!empty($_POST['escudoActual'])){
 
-						unlink($_POST['fotoActual']);
+						unlink($_POST['escudoActual']);
 
-					}else {
+					} else {
 
 						mkdir($directorio, 0755);
 
 					}
 
 					/*=============================================
-					DE ACUERDO AL TIPO DE IMAGEN VALIDAR TIPO DE IMAGEN APLICANDO FUNCIONES DE PHP
+					VALIDAR TIPO DE IMAGEN (JPEG O PNG) APLICANDO FUNCIONES DE PHP
 					=============================================*/	
 
-					if ($_FILES['editarFoto']['type'] == 'image/jpeg') {
+					if ($_FILES['editarEscudo']['type'] == 'image/jpeg') {
 						
 						/*=============================================
 						GUARDAR IMAGEN EN  DIRECTORIO
@@ -244,9 +230,9 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/usuarios/".$_POST['editarUsuario']."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/equipos/".$_POST['editarAlias']."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES['editarFoto']['tmp_name']);
+						$origen = imagecreatefromjpeg($_FILES['editarEscudo']['tmp_name']);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -256,7 +242,7 @@ class ControladorEquipos {
 
 					}
 
-					if ($_FILES['editarFoto']['type'] == 'image/png') {
+					if ($_FILES['editarEscudo']['type'] == 'image/png') {
 						
 						/*=============================================
 						GUARDAR IMAGEN EN  DIRECTORIO
@@ -264,9 +250,9 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/usuarios/".$_POST['editarUsuario']."/".$aleatorio.".png";
+						$ruta = "vistas/img/equipos/".$_POST['editarAlias']."/".$aleatorio.".png";
 
-						$origen = imagecreatefrompng($_FILES['editarFoto']['tmp_name']);
+						$origen = imagecreatefrompng($_FILES['editarEscudo']['tmp_name']);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -278,55 +264,17 @@ class ControladorEquipos {
 
 				}	
 
-				$tabla = 'usuarios';
-
-				if ($_POST["editarPassword"] != "") {
-
-					if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['editarPassword'])) {
-						
-						$encriptar = crypt($_POST["editarPassword"], '$2a$07$usesomesillystringforsalt$');
-
-					}else {
-
-						echo '<script>
-
-							swal({
-
-								type: "error",
-								title: "¡El usuario no puede ir vacío o llevar caracteres especiales!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar",
-								closeOnConfirm: false						
-						
-							}).then((result)=>{
-
-								if(result.value){
-
-									window.location = "usuarios";
-
-								}
-
-							});
-
-							</script>';
-
-					}
-
-				}else {
-
-					$encriptar = $_POST['passwordActual'];
-
-				}
+				$tabla = 'equipos';
 
 				$datos = array(
-					"nombre" => $_POST['editarNombre'],
-					"usuario" => $_POST['editarUsuario'],
-					"password" => $encriptar,
-					"perfil" => $_POST['editarPerfil'],
-					"foto" => $ruta
+					"id" => $_POST['idEquipo'],
+					"alias" => $_POST['editarAlias'],
+					"nombre" => $_POST['editarEquipo'],
+					"estadio" => $_POST['editarEstadio'],
+					"escudo" => $ruta
 				);
 
-				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+				$respuesta = ModeloEquipos::mdleditarEquipo($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -335,7 +283,7 @@ class ControladorEquipos {
 					swal({
 
 						type: "success",
-						title: "¡El usuario ha sido editado correctamente!",
+						title: "¡El equipo ha sido editado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -344,7 +292,7 @@ class ControladorEquipos {
 
 						if(result.value){
 
-							window.location = "usuarios";
+							window.location = "equipos";
 
 						}
 
@@ -361,7 +309,7 @@ class ControladorEquipos {
 					swal({
 
 						type: "error",
-						title: "¡El nombre no debe ir vacío o llevar caracteres especiales!",
+						title: "¡El alias no debe ir vacío o llevar caracteres especiales!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -370,7 +318,7 @@ class ControladorEquipos {
 
 						if(result.value){
 
-							window.location = "usuarios";
+							window.location = "equipos";
 
 						}
 
