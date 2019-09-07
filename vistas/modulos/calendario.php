@@ -5,7 +5,7 @@
 
     <h1>
 
-      Administrar categorías
+      Administrar calendario
 
     </h1>
 
@@ -13,7 +13,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Administrar categorías</li>
+      <li class="active">Administrar calendario</li>
 
     </ol>
 
@@ -25,7 +25,7 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCategoria">Agregar categoría</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarCalendario">Agregar Jornada</button>
 
       </div>
 
@@ -38,7 +38,12 @@
             <tr>
                 
               <th style="width: 10px">#</th>
-              <th>Categoría</th>
+              <th>Jornada</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Lugar</th>
+              <th>Equipo 1</th>
+              <th>Equipo 2</th>              
               <th>Acciones</th> 
 
             </tr>
@@ -49,24 +54,24 @@
 
             <?php 
 
-              $item = null;
+              /*$item = null;
               $valor = null;
 
-              $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+              $calendario = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
-              foreach ($categorias as $key => $value) {
+              foreach ($calendario as $key => $value) {
                 
                 echo '<tr>
                 
                         <td>'.($key+1).'</td>
-                        <td class="text-uppercase">'.$value["categoria"].'</td>
+                        <td class="text-uppercase">'.$value["calendario"].'</td>
                         <td>
             
                           <div class="btn-group">
                             
-                            <button class="btn btn-warning btnEditarCategoria" idCategoria="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCategoria"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-warning btnEditarCalendario" idCalendario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCalendario"><i class="fa fa-pencil"></i></button>
 
-                            <button class="btn btn-danger btnEliminarCategoria" idCategoria="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btnEliminarCalendario" idCalendario="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
                           </div>
 
@@ -74,7 +79,7 @@
 
                       </tr>';
 
-              }
+              }*/
 
              ?>
             
@@ -92,10 +97,10 @@
 
 
 <!--=====================================
-MODAL AGREGAR CATEGORÍA
+MODAL AGREGAR JORNADA
 ======================================-->
 
-<div id="modalAgregarCategoria" class="modal fade" role="dialog">
+<div id="modalAgregarCalendario" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -107,11 +112,11 @@ MODAL AGREGAR CATEGORÍA
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+        <div class="modal-header" style="background:#00a65a; color:white">
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar categoría</h4>
+          <h4 class="modal-title">Agregar Jornada</h4>
 
         </div>
 
@@ -123,7 +128,7 @@ MODAL AGREGAR CATEGORÍA
 
           <div class="box-body">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
+            <!-- ENTRADA PARA LA JORNADA -->
             
             <div class="form-group">
               
@@ -131,15 +136,176 @@ MODAL AGREGAR CATEGORÍA
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg nuevaCategoria" name="nuevaCategoria" placeholder="Ingresar categoria" required>
+                <input type="text" class="form-control input-lg" id="nuevaJornada" name="nuevaJornada" placeholder="Ingresa la jornada" required>
 
               </div>
 
             </div>
 
-          </div>
+            <!-- ENTRADA PARA FECHA Y HORA -->
+            
+            <div class="form-group row">
 
-        </div>
+              <div class="input-group">
+
+                <!-- SELECCIONAR HORA TIMEPICKER -->
+
+                <div class="col-xs-12 col-md-6">
+
+                  <div class="bootstrap-timepicker">
+
+                    <div class="form-group">
+
+                      <div class="input-group">
+
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+
+                        <input type="text" class="form-control timepicker input-lg" id="nuevaHora" name="nuevaHora" placeholder="Ingresa la hora" required>
+
+                      </div><!-- /.input group -->
+
+                    </div><!-- /.form group -->
+
+                  </div><!-- /.bootstrap-timepicker -->
+
+                </div><!-- /.col -->
+
+                <!-- SELECCIONAR FECHA DATEPICKER -->
+
+                <div class="col-xs-12 col-md-6">
+
+                  <div class="form-group">
+
+                    <div class="input-group date">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                      <input type="text" class="form-control pull-right input-lg" id="nuevaFecha" name="nuevaFecha" placeholder="Ingresa la fecha" language="es" required>
+
+                    </div><!-- /.input group -->
+
+                  </div><!-- /.form group -->
+
+                </div><!-- .col-xs -->
+
+                <!-- SELECCIONAR EL ESTADIO -->
+
+                <div class="col-xs-12">
+
+                  <div class="form-group">
+                
+                    <div class="input-group">
+                    
+                      <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                      <select class="form-control input-lg" id="nuevoEstadio" name="nuevoEstadio" required>
+                        
+                        <option value="">Selecionar estadio</option>
+
+                        <?php 
+
+                          $item = null;
+                          $valor = null;
+
+                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+
+                          /*foreach ($estadios as $key => $value) {
+                            
+                            echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
+
+                          }*/
+
+                        ?>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </div><!-- .col -->
+
+                <!-- SELECCIONAR EL EQUIPO1 -->
+
+                <div class="col-xs-6">
+
+                  <div class="form-group">
+                
+                    <div class="input-group">
+                    
+                      <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                      <select class="form-control input-lg" id="elegirEstadio" name="elegirEstadio" required>
+                        
+                        <option value="">Selecionar equipo 1</option>
+
+                        <?php 
+
+                          $item = null;
+                          $valor = null;
+
+                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+
+                          /*foreach ($estadios as $key => $value) {
+                            
+                            echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
+
+                          }*/
+
+                        ?>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </div><!-- .col -->
+
+                <!-- SELECCIONAR EL EQUIPO2 -->
+
+                <div class="col-xs-6">
+
+                  <div class="form-group">
+                
+                    <div class="input-group">
+                    
+                      <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                      <select class="form-control input-lg" id="elegirEstadio" name="elegirEstadio" required>
+                        
+                        <option value="">Selecionar equipo 2</option>
+
+                        <?php 
+
+                          $item = null;
+                          $valor = null;
+
+                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+
+                          /*foreach ($estadios as $key => $value) {
+                            
+                            echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
+
+                          }*/
+
+                        ?>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </div><!-- .col -->
+
+              </div><!-- .input-group -->
+
+            </div><!-- .form-group row -->
+
+          </div><!-- .form-group -->
+
+        </div><!-- .box-body -->
 
         <!--=====================================
         PIE DEL MODAL
@@ -149,15 +315,13 @@ MODAL AGREGAR CATEGORÍA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar categoría</button>
+          <button type="submit" class="btn btn-success">Guardar Jornada</button>
 
         </div>
 
           <?php 
 
-              $crearCategoria = new ControladorCategorias();
-              $crearCategoria -> ctrCrearCategoria();
-
+              
            ?>
 
       </form>
@@ -229,14 +393,13 @@ MODAL EDITAR CATEGORÍA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="submit" class="btn btn-success">Guardar cambios</button>
 
         </div>
 
         <?php 
 
-            $editarCategoria = new ControladorCategorias();
-            $editarCategoria -> ctrEditarCategoria();
+
 
          ?>
 
@@ -250,8 +413,7 @@ MODAL EDITAR CATEGORÍA
 
 <?php 
 
-    $eliminarCategoria = new ControladorCategorias();
-    $eliminarCategoria -> ctrBorrarCategoria();
+
 
 
  ?>

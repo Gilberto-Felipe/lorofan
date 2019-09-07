@@ -26,7 +26,7 @@ class ControladorEquipos {
 
 			echo $_POST['nuevoAlias'];
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ]+$/', $_POST['nuevoAlias']) && 
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevoAlias']) && 
 				preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevoEquipo']) && 
 				preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevoEstadio'])){
 
@@ -51,7 +51,12 @@ class ControladorEquipos {
 					CREAR DIRECTORIO PARA GUARDAR EL ESCUDO
 					=============================================*/	
 
-					$directorio = "vistas/img/equipos/".$_POST['nuevoAlias'];
+					// Quitar espacios en blanco al alias
+
+					$alias = $_POST['nuevoAlias'];
+					$alias = str_replace(" ", "", $alias);
+
+					$directorio = "vistas/img/equipos/".$alias;
 
 					// OTORGAR PERMISOS DE ADMINISTRADOR 
 					mkdir($directorio, 0755);
@@ -68,7 +73,7 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias']."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/equipos/".$alias."/".$aleatorio.".jpg";
 
 						$origen = imagecreatefromjpeg($_FILES['nuevoEscudo']['tmp_name']);
 
@@ -88,7 +93,7 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['nuevoAlias']."/".$aleatorio.".png";
+						$ruta = "vistas/img/equipos/".$alias."/".$aleatorio.".png";
 
 						$origen = imagecreatefrompng($_FILES['nuevoEscudo']['tmp_name']);
 
@@ -114,8 +119,6 @@ class ControladorEquipos {
 					"escudo" => $ruta,
 					"estadio" => $_POST['nuevoEstadio']
 				);
-
-				// var_dump($datos);
 
 				$respuesta = ModeloEquipos::mdlRegistrarEquipo($tabla, $datos);
 
@@ -183,7 +186,7 @@ class ControladorEquipos {
 
 		if (isset($_POST["editarAlias"])) {
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ]+$/', $_POST['editarAlias'])){
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['editarAlias'])){
 
 				/*=============================================
 				VALIDAR ESCUDO EQUIPO
@@ -199,10 +202,13 @@ class ControladorEquipos {
 					$nuevoAlto = 500;
 
 					/*=============================================
-					CREAR DIRECTORIO PARA GUARDAR LA FOTO
-					=============================================*/	
+					CREAR DIRECTORIO PARA GUARDAR EL ESCUDO
+					=============================================*/
 
-					$directorio = "vistas/img/equipos/".$_POST['editarAlias'];
+					$editarAlias = $_POST['editarAlias'];
+					$editarAlias = str_replace(" ", "", $editarAlias);
+
+					$directorio = "vistas/img/equipos/".$editarAlias;
 
 					/*=============================================
 					PREGUNTAMOS SI EXISTE OTRA FOTO EN LA BD
@@ -230,7 +236,7 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['editarAlias']."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/equipos/".$editarAlias."/".$aleatorio.".jpg";
 
 						$origen = imagecreatefromjpeg($_FILES['editarEscudo']['tmp_name']);
 
@@ -250,7 +256,7 @@ class ControladorEquipos {
 
 						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/equipos/".$_POST['editarAlias']."/".$aleatorio.".png";
+						$ruta = "vistas/img/equipos/".$editarAlias."/".$aleatorio.".png";
 
 						$origen = imagecreatefrompng($_FILES['editarEscudo']['tmp_name']);
 
@@ -333,26 +339,26 @@ class ControladorEquipos {
 	}
 
 	/*=============================================
-	ELIMINAR USUARIO             
+	ELIMINAR EQUIPO             
 	=============================================*/
 
-	public function ctrBorrarUsuario(){
+	public function ctrBorrarEquipo(){
 
-		if(isset($_GET['idUsuario'])){
+		if(isset($_GET['idEquipo'])){
+ 
+			if($_GET["idEquipo"]){
 
-			if($_GET["idUsuario"] != $_SESSION["id"]){
+				$tabla = 'equipos';
+				$datos = $_GET['idEquipo'];
 
-				$tabla = 'usuarios';
-				$datos = $_GET['idUsuario'];
-
-				if ($_GET['fotoUsuario'] != "") {
+				if ($_GET['imagenEscudo'] != "") {
 					
-					unlink($_GET['fotoUsuario']);
-					rmdir('vistas/img/usuarios/'.$_GET["usuario"]);
+					unlink($_GET['imagenEscudo']);
+					rmdir('vistas/img/equipos/'.$_GET["equipo"]);
 
 				}
 
-				$respuesta = ModeloUsuarios::mdlBorrarUsuario($tabla, $datos);
+				$respuesta = ModeloEquipos::mdlBorrarEquipo($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -361,7 +367,7 @@ class ControladorEquipos {
 					swal({
 
 						type: "success",
-						title: "¡El usuario ha sido eliminado correctamente!",
+						title: "¡El equipo ha sido eliminado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -370,7 +376,7 @@ class ControladorEquipos {
 
 						if(result.value){
 
-							window.location = "usuarios";
+							window.location = "equipos";
 
 						}
 

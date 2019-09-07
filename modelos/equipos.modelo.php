@@ -6,7 +6,7 @@ require_once "conexion.php";
 class ModeloEquipos{
 	
 	/*=============================================
-	=            MOSTRAR EQUIPOS            =
+	MOSTRAR EQUIPOS            
 	=============================================*/
 
 	static public function mdlMostrarEquipos($tabla, $item, $valor){
@@ -38,7 +38,7 @@ class ModeloEquipos{
 	}
 
 	/*=============================================
-	=            CREAR DE EQUIPOS            =
+	CREAR DE EQUIPOS
 	=============================================*/
 
 	static public function mdlRegistrarEquipo($tabla, $datos){
@@ -73,9 +73,8 @@ class ModeloEquipos{
 
 	static public function mdleditarEquipo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alias = :alias, nombre = :nombre, escudo = :escudo, estadio = :estadio WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alias = :alias, nombre = :nombre, escudo = :escudo, estadio = :estadio WHERE alias = :alias");
 
-		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt -> bindParam(":alias", $datos["alias"], PDO::PARAM_STR);
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt -> bindParam(":escudo", $datos["escudo"], PDO::PARAM_STR);
@@ -99,37 +98,10 @@ class ModeloEquipos{
 	}
 
 	/*=============================================
-	ACTUALIZAR USUARIO
+	ELIMINAR EQUIPO
 	=============================================*/
 
-	static public function mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item1 = :$item1 WHERE $item2 = :$item2");
-
-		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
-		$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
-
-		if($stmt -> execute()){
-
-			return "ok";
-		
-		}else{
-
-			return "error";	
-
-		}
-
-		$stmt -> close();
-
-		$stmt = null;
-
-	}
-
-	/*=============================================
-	ELIMINAR USUARIO
-	=============================================*/
-
-	static public function mdlBorrarUsuario($tabla, $datos){
+	static public function mdlBorrarEquipo($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
@@ -150,7 +122,6 @@ class ModeloEquipos{
 		$stmt = null;
 
 	}
-	
 	
 }
 

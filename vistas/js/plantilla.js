@@ -40,9 +40,11 @@ $(".tablas").DataTable({
 
 });
 
+
 /*=============================================
 iCHECK FOR CHECKBOX & RADIO-BUTTONS
 =============================================*/
+
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
 
   checkboxClass: 'icheckbox_minimal-blue',
@@ -62,8 +64,37 @@ $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' });
 //Money Euro
 $('[data-mask]').inputmask();
 
+
 /*=============================================
 DATE-MASK
 =============================================*/
 
 $('.select2-single').select2();
+
+
+/*=============================================
+BOOTSTRAP TIMEPICKER
+=============================================*/
+
+$('#nuevaHora').timepicker();
+
+/*=============================================
+BOOTSTRAP DATEPICKER
+=============================================*/
+
+// No sé cómo ponerla el display en español, ni cómo cambiar el resaltado del día
+
+$(function(){
+	$('#nuevaFecha').datepicker({
+		isRTL: 'false',
+		format: 'dd-mm-yyyy',
+		todayHighlight: true,
+		autoclose: true,
+		locale: 'es'
+	});
+
+	$.fn.datepicker.dates['es'];
+});
+
+
+

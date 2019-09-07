@@ -34,7 +34,7 @@ class AjaxEquipos {
 		$item = "alias";
 		$valor = $this->validarAlias;
 
-		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+		$respuesta = ControladorEquipos::ctrMostrarEquipos($item, $valor);
 
 		echo json_encode($respuesta);
 
@@ -55,18 +55,6 @@ if (isset($_POST['idEquipo'])) {
 }
 
 /*=============================================
-ACTIVAR USUARIO
-=============================================*/
-if (isset($_POST['activarUsuario'])){
-
-	$activarUsuario = new AjaxEquipos();
-	$activarUsuario -> activarUsuario = $_POST["activarUsuario"];
-	$activarUsuario -> activarId = $_POST["activarId"];
-	$activarUsuario -> ajaxActivarUsuario();
-
-}
-
-/*=============================================
 EVITAR EQUIPOS REPETIDOS INICIALIZACIÓN
 =============================================*/
 
@@ -75,6 +63,6 @@ if (isset($_POST['validarAlias'])){
 
 	$validarAlias = new AjaxEquipos();
 	$validarAlias -> validarAlias = $_POST["validarAlias"];
-	$validarAlias -> ajaxValidarUsuario();
+	$validarAlias -> ajaxValidarAlias();
 
 }

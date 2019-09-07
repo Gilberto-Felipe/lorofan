@@ -52,6 +52,12 @@
 
   <!-- Select2 -->
   <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css">
+
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="vistas/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="vistas/plugins/timepicker/bootstrap-timepicker.min.css">
   
   <!--=====================================
   =            Plugins js                 =
@@ -94,6 +100,13 @@
 
   <!-- jQueryNumber -->
   <script src="vistas/plugins/jQueryNumber/jQueryNumber.min.js"></script>
+
+  <!-- bootstrap datepicker -->
+  <script src="vistas/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="vistas\bower_components\bootstrap-datepicker\dist\locales\bootstrap-datepicker.es.min.js"></script>  
+
+  <!-- bootstrap time picker -->
+  <script src="vistas/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 
 </head>
 

@@ -84,7 +84,7 @@
                         
                         <button class="btn btn-warning btnEditarEquipo" idEquipo="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarEquipo"><i class="fa fa-pencil"></i></button>
 
-                        <button class="btn btn-danger btnEliminarEquipo" idEquipo="'.$value["id"].'" escudo="'.$value["escudo"].'" equipo="'.$value["alias"].'"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-danger btnEliminarEquipo" idEquipo="'.$value["id"].'" imagenEscudo="'.$value["escudo"].'" equipo="'.$value["alias"].'"><i class="fa fa-times"></i></button>
 
                       </div>
                     </td> 
@@ -148,7 +148,7 @@ MODAL AGREGAR EQUIPO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoAlias" placeholder="Ingresar alias" required>
+                <input type="text" class="form-control input-lg" id="nuevoAlias" name="nuevoAlias" placeholder="Ingresar alias" required>
 
               </div>
 
@@ -353,6 +353,7 @@ MODAL EDITAR EQUIPO
 
 <?php 
 
-  
+$borrarEquipo = new ControladorEquipos();
+$borrarEquipo -> ctrBorrarEquipo();
 
- ?>
+?>

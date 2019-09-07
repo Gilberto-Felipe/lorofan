@@ -96,14 +96,14 @@ $(".tablas").on("click", ".btnEditarEquipo", function(){
 });
 
 /*=============================================
-EVITAR USUARIOS REPETIDOS
+EVITAR ALIAS REPETIDOS
 =============================================*/
 
 $("#nuevoAlias").change(function() {
 
 	$(".alert").remove();
 	
-	let usuario = $(this).val();
+	let alias = $(this).val();
 
 	let datos = new FormData();
 	datos.append('validarAlias', alias);
@@ -136,15 +136,15 @@ $("#nuevoAlias").change(function() {
 ELIMINAR USUARIO
 =============================================*/
 
-$(".tablas").on("click", ".btnEliminarUsuario", function(){
+$(".tablas").on("click", ".btnEliminarEquipo", function(){
 
-	let idUsuario = $(this).attr("idUsuario");
-	let fotoUsuario = $(this).attr("fotoUsuario");
-	let usuario = $(this).attr("usuario");
+	let idEquipo = $(this).attr("idEquipo");
+	let imagenEscudo = $(this).attr("imagenEscudo");
+	let equipo = $(this).attr("equipo");
 
 	swal({
 
-		title: "¿Estás seguro de eliminar el usuario?",
+		title: "¿Estás seguro de eliminar el equipo?",
 		text: "Puedes cancelar la acción",
 		type: 'warning',
 		showCancelButton: true,
@@ -157,10 +157,9 @@ $(".tablas").on("click", ".btnEliminarUsuario", function(){
 
 		if (result.value) {
 
-			window.location = "index.php?ruta=usuarios&idUsuario="+idUsuario+"&usuario="+usuario+"&fotoUsuario="+fotoUsuario;
+			window.location = "index.php?ruta=equipos&idEquipo="+idEquipo+"&equipo="+equipo+"&imagenEscudo="+imagenEscudo;
 
 		}
-
 
 	});
 
@@ -168,13 +167,13 @@ $(".tablas").on("click", ".btnEliminarUsuario", function(){
 
 /*=============================================
 MOSTRAR FOTO POR DEFECTO AL AGREGAR NUEVO USUARIO 
--- problema: ocurre cuando modificas un usuario en su modal y no guardas cambios. 
+-- problema: ocurre cuando editas un usuario (en su modal) y no guardas cambios. 
 Luego abres el modal agregar nuevo usuario, entonces aparece la foto del usuario que ibas modificar, no la foto por defecto.
 =============================================*/
 
-$(document).on("click", "#btnAgregarUsuario", function(){
+$(document).on("click", "#btnAgregarEquipo", function(){
 
-    $(".previsualizar").attr("src", "vistas/img/usuarios/default/anonymous.png");
+    $(".previsualizar").attr("src", "vistas/img/equipos/default/anonymous.png");
     
 });
 
