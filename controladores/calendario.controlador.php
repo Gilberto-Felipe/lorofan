@@ -1,16 +1,16 @@
 <?php 
 
-class ControladorCategorias {
+class ControladorCalendario {
 
 	/*=============================================
-	MOSTRAR CATEGORÍAS
+	MOSTRAR jORNADAS
 	=============================================*/
 
-	static public function ctrMostrarCategorias($item, $valor){
+	static public function ctrMostrarJornadas($item, $valor){
 
-		$tabla = 'categorias';
+		$tabla = 'calendario';
 
-		$respuesta = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
+		$respuesta = ModeloCalendario::mdlMostrarCalendario($tabla, $item, $valor);
 
 		return $respuesta;
 
@@ -18,19 +18,26 @@ class ControladorCategorias {
 
 
 	/*=============================================
-	CREAR CATEGORÍAS
+	CREAR JORNADA
 	=============================================*/
 
-	static public function ctrCrearCategoria(){
+	static public function ctrCrearJornada(){
 
-		if (isset($_POST['nuevaCategoria'])) {
+		if (isset($_POST['nuevaJornada'])) {
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevaCategoria'])) {
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevaJornada'])) {
 
-				$tabla = 'categorias';
-				$datos = $_POST['nuevaCategoria'];
+				$tabla = 'calendario';
+				
+				$datos = array(
+					'jornada' => $_POST['nuevaJornada'],
+					'fecha' => $_POST['nuevaFecha'],
+					'lugar' => $_POST['nuevoEstadio'],
+					'equipo1' => $_POST['nuevoEstadio'],
+					'equipo2' => $_POST['nuevoEstadio']
+				);
 
-				$respuesta = ModeloCategorias::mdlIngresarCategoria($tabla, $datos);
+				$respuesta = ModeloCalendario::mdlCrearJornada($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -39,7 +46,7 @@ class ControladorCategorias {
 					swal({
 
 						type: "success",
-						title: "¡La categoría se ha guardado correctamente!",
+						title: "¡La jornada se ha guardado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -66,7 +73,7 @@ class ControladorCategorias {
 					swal({
 
 						type: "error",
-						title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
+						title: "¡La jornada no puede ir vacía o llevar caracteres especiales!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						

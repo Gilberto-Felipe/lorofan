@@ -43,7 +43,9 @@
               <th>Hora</th>
               <th>Lugar</th>
               <th>Equipo 1</th>
-              <th>Equipo 2</th>              
+              <th>Escudo 1</th>
+              <th>Equipo 2</th>
+              <th>Escudo 2</th>
               <th>Acciones</th> 
 
             </tr>
@@ -207,13 +209,13 @@ MODAL AGREGAR JORNADA
                           $item = null;
                           $valor = null;
 
-                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+                          $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
 
-                          /*foreach ($estadios as $key => $value) {
+                          foreach ($estadios as $key => $value) {
                             
                             echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
 
-                          }*/
+                          }
 
                         ?>
 
@@ -235,7 +237,7 @@ MODAL AGREGAR JORNADA
                     
                       <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                      <select class="form-control input-lg" id="elegirEstadio" name="elegirEstadio" required>
+                      <select class="form-control input-lg" id="nuevoAlias1" name="nuevoAlias1" required>
                         
                         <option value="">Selecionar equipo 1</option>
 
@@ -244,13 +246,15 @@ MODAL AGREGAR JORNADA
                           $item = null;
                           $valor = null;
 
-                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+                          $equipo1 = ControladorEquipos::ctrMostrarEquipos($item, $valor);
 
-                          /*foreach ($estadios as $key => $value) {
+                          foreach ($equipo1 as $key => $value) {
                             
-                            echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
+                            echo '<option value="'.$value["id"].'">'.$value["alias"].'</option>';
 
-                          }*/
+                            '<input type="hidden" name="'.$value["escudo"].'">';
+
+                          }
 
                         ?>
 
@@ -272,7 +276,7 @@ MODAL AGREGAR JORNADA
                     
                       <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                      <select class="form-control input-lg" id="elegirEstadio" name="elegirEstadio" required>
+                      <select class="form-control input-lg" id="nuevoAlias2" name="nuevoAlias2" required>
                         
                         <option value="">Selecionar equipo 2</option>
 
@@ -281,13 +285,15 @@ MODAL AGREGAR JORNADA
                           $item = null;
                           $valor = null;
 
-                          // $estadios = ControladorEquipos::ctrMostrarEquipos($item, $valor);
+                          $equipo2 = ControladorEquipos::ctrMostrarEquipos($item, $valor);
 
-                          /*foreach ($estadios as $key => $value) {
+                          foreach ($equipo2 as $key => $value) {
                             
-                            echo '<option value="'.$value["id"].'">'.$value["estadio"].'</option>';
+                            echo '<option value="'.$value["id"].'">'.$value["alias"].'</option>';
 
-                          }*/
+                            '<input type="hidden" name="'.$value["escudo"].'">';
+
+                          }
 
                         ?>
 
@@ -321,6 +327,8 @@ MODAL AGREGAR JORNADA
 
           <?php 
 
+            $crearJornada = new ControladorCalendario();
+            $crearJornada -> ctrCrearJornada();
               
            ?>
 
