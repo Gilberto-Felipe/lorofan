@@ -42,10 +42,8 @@
               <th>Fecha</th>
               <th>Hora</th>
               <th>Lugar</th>
-              <th>Equipo 1</th>
-              <th>Escudo 1</th>
-              <th>Equipo 2</th>
-              <th>Escudo 2</th>
+              <th>Equipo local</th>
+              <th>Equipo visitante</th>
               <th>Acciones</th> 
 
             </tr>
@@ -56,21 +54,32 @@
 
             <?php 
 
-              /*$item = null;
+              $item = null;
               $valor = null;
 
               $calendario = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
               foreach ($calendario as $key => $value) {
+
+                // DIVIDIR FECHA Y HORA, Y FORMATEAR FECHA QUE VIENE DE BD
+
+                $fechaBD = $calendario["fecha"][$value]; 
+                $fechaSola = date('d-m-Y',strtotime($fechaBD));
+                $horaSola = date('H:i:s',strtotime($fechaBD));
                 
                 echo '<tr>
-                
+
                         <td>'.($key+1).'</td>
-                        <td class="text-uppercase">'.$value["calendario"].'</td>
+                        <td>'.$value["jornada"].'</td>
+                        <td>'.$fechaSola.'</td>
+                        <td>'.$horaSola.'</td>
+                        <td>'.$value["lugar"].'</td>
+                        <td>'.$value["equipo1"].'</td>
+                        <td>'.$value["equipo2"].'</td>
                         <td>
-            
+                        
                           <div class="btn-group">
-                            
+        
                             <button class="btn btn-warning btnEditarCalendario" idCalendario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCalendario"><i class="fa fa-pencil"></i></button>
 
                             <button class="btn btn-danger btnEliminarCalendario" idCalendario="'.$value["id"].'"><i class="fa fa-times"></i></button>
@@ -81,7 +90,7 @@
 
                       </tr>';
 
-              }*/
+              }
 
              ?>
             
@@ -150,6 +159,24 @@ MODAL AGREGAR JORNADA
 
               <div class="input-group">
 
+                <!-- SELECCIONAR FECHA DATEPICKER -->
+
+                <div class="col-xs-12 col-md-6">
+
+                  <div class="form-group">
+
+                    <div class="input-group date">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                      <input type="text" class="form-control pull-right input-lg" id="nuevaFecha" name="nuevaFecha" placeholder="Ingresa la fecha" required>
+
+                    </div><!-- /.input group -->
+
+                  </div><!-- /.form group -->
+
+                </div><!-- .col-xs -->
+
                 <!-- SELECCIONAR HORA TIMEPICKER -->
 
                 <div class="col-xs-12 col-md-6">
@@ -171,24 +198,6 @@ MODAL AGREGAR JORNADA
                   </div><!-- /.bootstrap-timepicker -->
 
                 </div><!-- /.col -->
-
-                <!-- SELECCIONAR FECHA DATEPICKER -->
-
-                <div class="col-xs-12 col-md-6">
-
-                  <div class="form-group">
-
-                    <div class="input-group date">
-
-                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-
-                      <input type="text" class="form-control pull-right input-lg" id="nuevaFecha" name="nuevaFecha" placeholder="Ingresa la fecha" language="es" required>
-
-                    </div><!-- /.input group -->
-
-                  </div><!-- /.form group -->
-
-                </div><!-- .col-xs -->
 
                 <!-- SELECCIONAR EL ESTADIO -->
 

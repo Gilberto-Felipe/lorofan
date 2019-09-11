@@ -101,12 +101,12 @@
   <!-- jQueryNumber -->
   <script src="vistas/plugins/jQueryNumber/jQueryNumber.min.js"></script>
 
-  <!-- bootstrap datepicker -->
+  <!-- bootstrap datepicker-->
   <script src="vistas/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="vistas\bower_components\bootstrap-datepicker\dist\locales\bootstrap-datepicker.es.min.js"></script>  
+  <script src="vistas/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"  charset="UTF-8"></script> 
 
   <!-- bootstrap time picker -->
-  <script src="vistas/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <script src="vistas/bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 
 </head>
 

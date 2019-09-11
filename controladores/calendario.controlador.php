@@ -3,10 +3,10 @@
 class ControladorCalendario {
 
 	/*=============================================
-	MOSTRAR jORNADAS
+	MOSTRAR JORNADAS
 	=============================================*/
 
-	static public function ctrMostrarJornadas($item, $valor){
+	static public function ctrMostrarCalendario($item, $valor){
 
 		$tabla = 'calendario';
 
@@ -28,10 +28,16 @@ class ControladorCalendario {
 			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevaJornada'])) {
 
 				$tabla = 'calendario';
+
+				// FORMATEAR FECHA Y HORA PARA ENVIAR A BD
+
+				$fechaDatePicker = $_POST['nuevaFecha'];
+				$horaTimepicker = $_POST['nuevaHora'];
+				$fechaFormateada = date("Y-m-d H:i:s", strtotime($fechaDatePicker.$horaTimepicker));
 				
 				$datos = array(
 					'jornada' => $_POST['nuevaJornada'],
-					'fecha' => $_POST['nuevaFecha'],
+					'fecha' => $fechaFormateada,
 					'lugar' => $_POST['nuevoEstadio'],
 					'equipo1' => $_POST['nuevoEstadio'],
 					'equipo2' => $_POST['nuevoEstadio']
@@ -55,7 +61,7 @@ class ControladorCalendario {
 
 						if(result.value){
 
-							window.location = "categorias";
+							window.location = "calendario";
 
 						}
 
@@ -65,80 +71,8 @@ class ControladorCalendario {
 
 				}
 
-
-			} else{
-
-				echo '<script>
-
-					swal({
-
-						type: "error",
-						title: "¡La jornada no puede ir vacía o llevar caracteres especiales!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar",
-						closeOnConfirm: false						
-				
-					}).then((result)=>{
-
-						if(result.value){
-
-							window.location = "categorias";
-
-						}
-
-					});
-
-					</script>';
-
-			}
-
-		}
-
-	}
-
-	/*=============================================
-	EDITAR CATEGORÍA
-	=============================================*/
-
-	static public function ctrEditarCategoria(){
-
-		if (isset($_POST['editarCategoria'])) {
-			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['editarCategoria'])) {
-
-				$tabla = 'categorias';
-				$datos = array("categoria" => $_POST['editarCategoria'],
-								"id" => $_POST['idCategoria']);
-
-				$respuesta = ModeloCategorias::mdlEditarCategoria($tabla, $datos);
-
-				if ($respuesta == "ok") {
-					
-					echo '<script>
-
-					swal({
-
-						type: "success",
-						title: "¡La categoría se modificó correctamente!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"					
-				
-					}).then((result)=>{
-
-						if(result.value){
-
-							window.location = "categorias";
-
-						}
-
-					});
-
-					</script>';
-
-				}
-
-
-			} else{
+			} 
+			else{
 
 				echo '<script>
 
@@ -147,7 +81,8 @@ class ControladorCalendario {
 						type: "error",
 						title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
 						showConfirmButton: true,
-						confirmButtonText: "Cerrar"		
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false						
 				
 					}).then((result)=>{
 
@@ -164,52 +99,7 @@ class ControladorCalendario {
 			}
 
 		}
-
-	}
-
-	/*=============================================
-	ELIMINAR CATEGORÍA
-	=============================================*/
-
-	static public function ctrBorrarCategoria(){
-
-		if (isset($_GET['idCategoria'])) {
 			
-			$tabla = "categorias";
-			$datos = $_GET['idCategoria'];
-
-			$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
-
-
-				if ($respuesta == "ok") {
-					
-					echo '<script>
-
-					swal({
-
-						type: "success",
-						title: "¡La categoría ha sido eliminada correctamente!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar",
-						closeOnConfirm: false						
-				
-					}).then((result)=>{
-
-						if(result.value){
-
-							window.location = "categorias";
-
-						}
-
-					})
-
-					</script>';
-
-				}
-
-
-		}
-
 	}
-
+				
 }

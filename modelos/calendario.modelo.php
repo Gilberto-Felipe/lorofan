@@ -2,14 +2,13 @@
 
 require_once "conexion.php";
 
-class ModeloCategorias{
-
+class ModeloCalendario{
 
 	/*=============================================
-	MOSTRAR CATEGORÍAS            
+	MOSTRAR JORNADAS            
 	=============================================*/
 
-	static public function mdlMostrarCategorias($tabla, $item, $valor){
+	static public function mdlMostrarCalendario($tabla, $item, $valor){
 
 		if ($item != null) {
 			
@@ -38,14 +37,18 @@ class ModeloCategorias{
 	}
 
 	/*=============================================
-	CREAR CATEGORÍAS
+	CREAR JORNADAS
 	=============================================*/
 
-	static public function mdlIngresarCategoria($tabla, $datos){
+	static public function mdlCrearJornada($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(categoria) VALUES(:categoria)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(jornada, fecha, lugar, equipo1, equipo2) VALUES(:jornada, :fecha, :lugar, :equipo1, :equipo2)");
 
-		$stmt -> bindParam(":categoria", $datos, PDO::PARAM_STR);
+		$stmt->bindParam(":jornada", $datos["jornada"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":lugar", $datos["lugar"], PDO::PARAM_STR);
+		$stmt->bindParam(":equipo1", $datos["equipo1"], PDO::PARAM_STR);
+		$stmt->bindParam(":equipo2", $datos["equipo2"], PDO::PARAM_STR);
 
 		if ($stmt->execute()){
 			
