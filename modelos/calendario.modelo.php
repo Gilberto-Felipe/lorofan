@@ -23,7 +23,14 @@ class ModeloCalendario{
 		} 
 		else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * from $tabla");
+			$stmt = Conexion::conectar()->prepare(
+				"SELECT 
+					C.id, C.jornada, C.fecha, C.lugar, 
+					A.alias as equipo1, B.alias as equipo2
+				FROM 
+					$tabla AS C JOIN equipos AS A ON C.equipo1 = A.id
+					JOIN equipos AS B ON B.id = C.equipo2"
+			);
 
 			$stmt -> execute();
 

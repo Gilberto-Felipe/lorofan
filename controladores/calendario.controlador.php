@@ -39,9 +39,11 @@ class ControladorCalendario {
 					'jornada' => $_POST['nuevaJornada'],
 					'fecha' => $fechaFormateada,
 					'lugar' => $_POST['nuevoEstadio'],
-					'equipo1' => $_POST['nuevoEstadio'],
-					'equipo2' => $_POST['nuevoEstadio']
+					'equipo1' => $_POST['nuevoAlias1'],
+					'equipo2' => $_POST['nuevoAlias2']
 				);
+
+				//var_dump($datos);
 
 				$respuesta = ModeloCalendario::mdlCrearJornada($tabla, $datos);
 
