@@ -2,17 +2,17 @@
 EVITAR CATEGORIAS REPETIDAS
 =============================================*/
 
-$(".nuevaCategoria").change(function() {
+$("#nuevaJornada").change(function() {
 
 	$(".alert").remove();
 	
-	let categoria = $(this).val();
+	let jornada = $(this).val();
 
 	let datos = new FormData();
-	datos.append('validarCategoria', categoria);
+	datos.append('validarJornada', jornada);
 
 		$.ajax({
-		url: 'ajax/categorias.ajax.php',
+		url: 'ajax/calendario.ajax.php',
 		method: 'POST',
 		data: datos,
 		cache: false, 
@@ -23,9 +23,9 @@ $(".nuevaCategoria").change(function() {
 
 			if (respuesta) {
 
-				$(".nuevaCategoria").parent().after('<div class="alert alert-warning">Esta categoría ya existe en la base de datos.</div>');
+				$("#editarJornada").parent().after('<div class="alert alert-warning">Esta jornada ya existe en la base de datos.</div>');
 
-				$(".nuevaCategoria").val("");
+				$("#editarJornada").val("");
 
 			}
 
@@ -36,18 +36,18 @@ $(".nuevaCategoria").change(function() {
 });
 
 /*=============================================
-EDITAR CATEGORIAS
+EDITAR JORNADAS
 =============================================*/
 
-$(".btnEditarCategoria").click(function(){
+$(".tablas").on("click", ".btnEditarJornada", function(){
 
-	let idCategoria = $(this).attr('idCategoria');
+	let idJornada = $(this).attr('idJornada');
 
 	let datos = new FormData();
-	datos.append("idCategoria", idCategoria);
+	datos.append("idJornada", idJornada);
 
 	$.ajax({
-		url: 'ajax/categorias.ajax.php',
+		url: 'ajax/calendario.ajax.php',
 		method: 'POST',
 		data: datos,
 		cache: false, 
@@ -56,8 +56,32 @@ $(".btnEditarCategoria").click(function(){
 		dataType: 'json',
 		success: function(respuesta){
 
-			$("#editarCategoria").val(respuesta["categoria"]);
-			$("#idCategoria").val(respuesta["id"]);
+			$("#idJornada").val(respuesta["id"]);
+			$("#editarJornada").val(respuesta["jornada"]);
+			
+
+			//$("#editarFecha").val(fechaSola);
+			//$("#editarHora").val(horaSola);
+			$("#editarEstadio").val(respuesta["estadio"]);
+			$("#editarAlias1").val(respuesta["equipo1"]);
+			$("#editarAlias12").val(respuesta["equipo2"]);
+
+			$('#idJornada').val(respuesta["id"]);
+			$("#editarJornada").val(respuesta["jornada"]);
+
+			/*	FORMATEAR FECHA BD EN JS	
+			
+			let fechaBD = moment(respuesta["fecha"]).format('DD-MM-YYYY');
+
+			$("#editarFecha").val(fechaBD);
+			//$("#editarHora").val(horaSola);
+
+
+			$("#editarEstadio").val(respuesta["lugar"]);
+			$("#editarAlias1").html(respuesta["equipo1"]);
+			$("#editarAlias1").val(respuesta["equipo1"]);
+			$("#editarAlias2").html(respuesta["equipo2"]);
+			$("#editarAlias2").val(respuesta["equipo2"]);*/
 
 		}
 

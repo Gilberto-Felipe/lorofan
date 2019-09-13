@@ -102,6 +102,7 @@
   <script src="vistas/plugins/jQueryNumber/jQueryNumber.min.js"></script>
 
   <!-- bootstrap datepicker-->
+  <script src="vistas/bower_components/moment/min/moment.min.js"></script>
   <script src="vistas/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script src="vistas/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"  charset="UTF-8"></script> 
 

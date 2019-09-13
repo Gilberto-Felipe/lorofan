@@ -84,6 +84,11 @@ $('#nuevaFecha').datepicker({
 	autoclose: true,
 });
 
+$('#editarFecha').datepicker({
+	format: 'dd-mm-yyyy',
+	todayHighlight: true,
+	autoclose: true,
+});
 
 /*=============================================
 BOOTSTRAP TIMEPICKER
@@ -98,5 +103,13 @@ $('#nuevaHora').timepicker({
 	defaultTime: false
 });
 
+$('#editarHora').timepicker({
+	minuteStep: 1,
+	template: 'modal',
+	appendWidgetTo: 'body',
+	showSeconds: true,
+	showMeridian: false,
+	defaultTime: false
+});
 
 

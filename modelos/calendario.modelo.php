@@ -12,7 +12,14 @@ class ModeloCalendario{
 
 		if ($item != null) {
 			
-			$stmt = Conexion::conectar()->prepare("SELECT * from $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare(
+				"SELECT 
+					C.id, C.jornada, C.fecha, C.lugar, 
+					A.alias as equipo1, B.alias as equipo2
+			FROM 
+				$tabla AS C JOIN equipos AS A ON C.equipo1 = A.id
+				JOIN equipos AS B ON B.id = C.equipo2"
+			);
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 

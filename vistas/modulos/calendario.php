@@ -82,9 +82,9 @@
                         
                           <div class="btn-group">
         
-                            <button class="btn btn-warning btnEditarCalendario" idCalendario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCalendario"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-warning btnEditarJornada" idJornada="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCalendario"><i class="fa fa-pencil"></i></button>
 
-                            <button class="btn btn-danger btnEliminarCalendario" idCalendario="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btnEliminarJornada" idJornada="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
                           </div>
 
@@ -485,9 +485,9 @@ MODAL EDITAR CALENDARIO
                     
                       <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                      <select class="form-control input-lg" name="nuevoAlias2" required>
+                      <select class="form-control input-lg" name="editarAlias2" required>
                         
-                        <option value="" id="nuevoAlias2"></option>
+                        <option value="" id="editarAlias2"></option>
 
                         <?php 
 

@@ -1,39 +1,39 @@
 <?php 
 
-require_once "../controladores/categorias.controlador.php";
-require_once "../modelos/categorias.modelo.php";
+require_once "../controladores/calendario.controlador.php";
+require_once "../modelos/calendario.modelo.php";
 
 
-class AjaxCategorias{
+class AjaxCalendario{
 
 	/*=============================================
-	EVITAR INSERTAR CATEGORIAS REPETIDAS
+	EVITAR INSERTAR JORNADAS REPETIDAS
 	=============================================*/
-	public $validarCategoria;
+	public $validarJornada;
 	
-	public function ajaxValidarCategoria(){
+	public function ajaxValidarJornada(){
 
-		$item = "categoria";
+		$item = "jornada";
 		$valor = $this->validarCategoria;
 
-		$respuesta = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
 		echo json_encode($respuesta);
 
 	}
 
 	/*=============================================
-	EDITAR CATEGORIA
+	EDITAR JORNADAS
 	=============================================*/
 
-	public $idCategoria;
+	public $idJornada;
 
-	public function ajaxEditarCategoria(){
+	public function ajaxEditarJornada(){
 
 		$item = "id";
-		$valor = $this->idCategoria;
+		$valor = $this->idJornada;
 
-		$respuesta = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
 		echo json_encode($respuesta);
 
@@ -42,27 +42,27 @@ class AjaxCategorias{
 }
 
 /*=============================================
-VALIDAR EVITAR CATEGORIAS REPETIDAS
+VALIDAR EVITAR JORNADAS REPETIDAS
 =============================================*/
 
 if (isset($_POST['validarCategoria'])){
 
-	$validarCategoria = new AjaxCategorias();
-	$validarCategoria -> validarCategoria = $_POST["validarCategoria"];
-	$validarCategoria -> ajaxValidarCategoria();
+	$validarJornada = new AjaxCalendario();
+	$validarJornada -> validarJornada = $_POST["validarJornada"];
+	$validarJornada -> ajaxvalidarJornada();
 
 }
 
 /*=============================================
-EDITAR CATEGORÍA
+EDITAR JORNADAS
 =============================================*/
 
-if (isset($_POST['idCategoria'])) {
+if (isset($_POST['idJornada'])) {
 	
 
-	$categoria = new AjaxCategorias();
-	$categoria -> idCategoria = $_POST['idCategoria'];
-	$categoria -> ajaxEditarCategoria();
+	$idJornada = new AjaxCalendario();
+	$idJornada -> idJornada = $_POST['idJornada'];
+	$idJornada -> ajaxEditarJornada();
 
 }
 
