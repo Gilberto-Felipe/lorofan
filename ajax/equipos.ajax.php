@@ -48,9 +48,9 @@ EDITAR EQUIPO INICIALIZACIÓN
 
 if (isset($_POST['idEquipo'])) {
 	
-	$editar = new AjaxEquipos();
-	$editar -> idEquipo = $_POST['idEquipo'];
-	$editar -> ajaxEditarEquipo();
+	$editarEquipo = new AjaxEquipos();
+	$editarEquipo -> idEquipo = $_POST['idEquipo'];
+	$editarEquipo -> ajaxEditarEquipo();
 
 }
 

@@ -1,5 +1,87 @@
 /*=============================================
-EVITAR CATEGORIAS REPETIDAS
+EDITAR JORNADAS
+=============================================*/
+
+$(".tablas").on("click", ".btnEditarJornada", function(){
+
+	let idJornada = $(this).attr('idJornada');
+	console.log("idJornada ", idJornada);
+	 
+	let datos = new FormData();
+	datos.append('idJornada', idJornada);
+
+	$.ajax({
+		url:'ajax/calendario.ajax.php',
+		method: 'POST',
+		data: datos,
+		cache: false, 
+		contentType: false,
+		processData: false,
+		dataType: 'json',
+		success: function(respuesta){
+
+			// console.log(respuesta);
+
+			$('#idJornada').val(respuesta['id']);
+            $('#editarJornada').val(respuesta['jornada']);
+
+            // SEPARAR Y FORMATEAR FECHA CON MOMENT.JS
+            let fechaSola = moment(respuesta["fecha"]).format('DD-MM-YYYY');
+            $('#editarFecha').val(fechaSola);
+
+            // SEPARAR Y FORMATEAR HORA CON MOMENT.JS
+            let horaSola = moment(respuesta["fecha"]).format('HH:mm');
+            $('#editarHora').val(horaSola);
+            
+            $('#editarEstadio').val(respuesta['lugar']);
+
+            $('#editarAlias1').html(respuesta['equipo1']);
+            $('#editarAlias1').val(respuesta['idEquipo1']);
+
+            $('#editarAlias2').html(respuesta['equipo2']);
+            $('#editarAlias2').val(respuesta['idEquipo2']);
+
+		}
+
+	});
+	
+});
+
+
+/*=============================================
+ELIMINAR JORNADA
+=============================================*/
+
+$(".tablas").on("click", ".btnEliminarJornada", function(){
+
+	let idJornada = $(this).attr("idJornada");
+
+	swal({
+
+		title: "¿Estás seguro de eliminar la jornada?",
+		text: "Puedes cancelar la acción",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Sí, eliminar'
+
+	}).then(function(result){
+
+		if (result.value) {
+
+			window.location = "index.php?ruta=calendario&idJornada="+idJornada;
+
+		}
+
+	});
+
+});
+
+
+/*=============================================
+EVITAR ALIAS REPETIDOS EN EL MODAL AGREGAR JORNADA
 =============================================*/
 
 $("#nuevaJornada").change(function() {
@@ -7,6 +89,7 @@ $("#nuevaJornada").change(function() {
 	$(".alert").remove();
 	
 	let jornada = $(this).val();
+ 	// console.log("jornada ", jornada);
 
 	let datos = new FormData();
 	datos.append('validarJornada', jornada);
@@ -21,98 +104,15 @@ $("#nuevaJornada").change(function() {
 		dataType: 'json',
 		success: function(respuesta){
 
+ 		// console.log("respuesta ", respuesta);
+
 			if (respuesta) {
 
-				$("#editarJornada").parent().after('<div class="alert alert-warning">Esta jornada ya existe en la base de datos.</div>');
+				$("#nuevaJornada").parent().after('<div class="alert alert-warning">Esta jornada ya existe en la base de datos.</div>');
 
-				$("#editarJornada").val("");
+				$("#nuevaJornada").val("");
 
 			}
-
-		}
-
-	});
-
-});
-
-/*=============================================
-EDITAR JORNADAS
-=============================================*/
-
-$(".tablas").on("click", ".btnEditarJornada", function(){
-
-	let idJornada = $(this).attr('idJornada');
-
-	let datos = new FormData();
-	datos.append("idJornada", idJornada);
-
-	$.ajax({
-		url: 'ajax/calendario.ajax.php',
-		method: 'POST',
-		data: datos,
-		cache: false, 
-		contentType: false,
-		processData: false,
-		dataType: 'json',
-		success: function(respuesta){
-
-			$("#idJornada").val(respuesta["id"]);
-			$("#editarJornada").val(respuesta["jornada"]);
-			
-
-			//$("#editarFecha").val(fechaSola);
-			//$("#editarHora").val(horaSola);
-			$("#editarEstadio").val(respuesta["estadio"]);
-			$("#editarAlias1").val(respuesta["equipo1"]);
-			$("#editarAlias12").val(respuesta["equipo2"]);
-
-			$('#idJornada').val(respuesta["id"]);
-			$("#editarJornada").val(respuesta["jornada"]);
-
-			/*	FORMATEAR FECHA BD EN JS	
-			
-			let fechaBD = moment(respuesta["fecha"]).format('DD-MM-YYYY');
-
-			$("#editarFecha").val(fechaBD);
-			//$("#editarHora").val(horaSola);
-
-
-			$("#editarEstadio").val(respuesta["lugar"]);
-			$("#editarAlias1").html(respuesta["equipo1"]);
-			$("#editarAlias1").val(respuesta["equipo1"]);
-			$("#editarAlias2").html(respuesta["equipo2"]);
-			$("#editarAlias2").val(respuesta["equipo2"]);*/
-
-		}
-
-	});
-
-});
-
-/*=============================================
-ELIMINAR CATEGORIAS
-=============================================*/
-
-$(".tablas").on("click", ".btnEliminarCategoria", function(){
-
-	let idCategoria = $(this).attr("idCategoria");
-
-	swal({
-
-		title: "¿Estás seguro de eliminar la categoría?",
-		text: "Puedes cancelar la acción",
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		cancelButtonText: 'Cancelar',
-		confirmButtonText: 'Sí, eliminar'
-
-	}).then(function(result){
-
-		if (result.value) {
-
-			window.location = "index.php?ruta=categorias&idCategoria="+idCategoria;
 
 		}
 

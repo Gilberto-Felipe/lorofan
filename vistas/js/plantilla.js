@@ -95,6 +95,7 @@ BOOTSTRAP TIMEPICKER
 =============================================*/
 
 $('#nuevaHora').timepicker({
+	timeFormat: 'HH:mm',
 	minuteStep: 1,
 	template: 'modal',
 	appendWidgetTo: 'body',
@@ -104,6 +105,7 @@ $('#nuevaHora').timepicker({
 });
 
 $('#editarHora').timepicker({
+	timeFormat: 'HH:mm',
 	minuteStep: 1,
 	template: 'modal',
 	appendWidgetTo: 'body',

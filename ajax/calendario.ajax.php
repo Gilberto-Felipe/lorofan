@@ -7,14 +7,15 @@ require_once "../modelos/calendario.modelo.php";
 class AjaxCalendario{
 
 	/*=============================================
-	EVITAR INSERTAR JORNADAS REPETIDAS
+	LLENAR EL MODAL EDITAR JORNADAS
 	=============================================*/
-	public $validarJornada;
-	
-	public function ajaxValidarJornada(){
 
-		$item = "jornada";
-		$valor = $this->validarCategoria;
+	public $idJornada;
+
+	public function ajaxEditarJornada(){
+
+		$item = "id";
+        $valor = $this->idJornada;
 
 		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
@@ -23,15 +24,15 @@ class AjaxCalendario{
 	}
 
 	/*=============================================
-	EDITAR JORNADAS
+	EVITAR JORNADAS REPETIDAS EN EL MODAL AGREGAR JORNADA
 	=============================================*/
 
-	public $idJornada;
+	public $validarJornada;
 
-	public function ajaxEditarJornada(){
+	public function ajaxValidarJornada(){
 
-		$item = "id";
-		$valor = $this->idJornada;
+		$item = "jornada";
+		$valor = $this->validarJornada;
 
 		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
@@ -41,28 +42,29 @@ class AjaxCalendario{
 
 }
 
-/*=============================================
-VALIDAR EVITAR JORNADAS REPETIDAS
-=============================================*/
-
-if (isset($_POST['validarCategoria'])){
-
-	$validarJornada = new AjaxCalendario();
-	$validarJornada -> validarJornada = $_POST["validarJornada"];
-	$validarJornada -> ajaxvalidarJornada();
-
-}
 
 /*=============================================
-EDITAR JORNADAS
+LLENAR MODAL EDITAR JORNADAS INSTANCIACIÓN
 =============================================*/
 
 if (isset($_POST['idJornada'])) {
-	
 
 	$idJornada = new AjaxCalendario();
 	$idJornada -> idJornada = $_POST['idJornada'];
 	$idJornada -> ajaxEditarJornada();
+
+}
+
+/*=============================================
+EVITAR JORNADAS REPETIDAS EN MODAL AGREGAR JORNADAS INSTANCIACIÓN
+=============================================*/
+
+if (isset($_POST['validarJornada'])){
+	//echo '<pre>'; print_r($_POST['validarJornada']); echo '</pre>';
+
+	$validarJornada = new AjaxCalendario();
+	$validarJornada -> validarJornada = $_POST["validarJornada"];
+	$validarJornada -> ajaxValidarJornada();
 
 }
 

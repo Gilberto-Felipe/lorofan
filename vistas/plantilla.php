@@ -144,7 +144,6 @@
         $_GET["ruta"] == "calendario" ||
         $_GET["ruta"] == "noticias" ||
         $_GET["ruta"] == "jugadores" ||
-        $_GET["ruta"] == "notificaciones" ||
         $_GET["ruta"] == "juego" ||
         $_GET["ruta"] == "salir"){
 
@@ -184,9 +183,7 @@
   <script src="vistas/js/plantilla.js"></script>
   <script src="vistas/js/equipos.js"></script>
   <script src="vistas/js/calendario.js"></script>
-  <script src="vistas/js/noticias.js"></script>
   <script src="vistas/js/jugadores.js"></script>
-  <script src="vistas/js/notificaciones.js"></script>
 
 </body>
 </html>

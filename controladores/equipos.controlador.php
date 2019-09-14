@@ -308,27 +308,28 @@ class ControladorEquipos {
 
 				}
 
-			}else{
+			}
+			else{
 
 				echo '<script>
 
-					swal({
+						swal({
 
-						type: "error",
-						title: "¡El alias no debe ir vacío o llevar caracteres especiales!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar",
-						closeOnConfirm: false						
-				
-					}).then((result)=>{
+							type: "error",
+							title: "¡El alias no debe ir vacío o llevar caracteres especiales!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false						
+					
+						}).then((result)=>{
 
-						if(result.value){
+							if(result.value){
 
-							window.location = "equipos";
+								window.location = "equipos";
 
-						}
+							}
 
-					});
+						});
 
 					</script>';
 

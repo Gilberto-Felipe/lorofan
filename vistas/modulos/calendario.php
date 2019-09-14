@@ -59,7 +59,7 @@
 
               $calendario = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
-              //var_dump($calendario);
+              //Var_dump($calendario);
 
               foreach ($calendario as $key => $value) {
 
@@ -68,6 +68,8 @@
                 $fechaBD = $value["fecha"]; 
                 $fechaSola = date('d-m-Y',strtotime($fechaBD));
                 $horaSola = date('H:i',strtotime($fechaBD));
+
+                // IMPRIMIR DATOS EN LA TABLA / PANTALLA
                 
                 echo '<tr>
 
@@ -231,7 +233,7 @@ MODAL AGREGAR JORNADA
 
                       <select class="form-control input-lg" id="nuevoAlias1" name="nuevoAlias1" required>
                         
-                        <option value="">Selecionar equipo 1</option>
+                        <option hidden value="">Selecionar equipo 1</option>
 
                         <?php 
 
@@ -268,7 +270,7 @@ MODAL AGREGAR JORNADA
 
                       <select class="form-control input-lg" id="nuevoAlias2" name="nuevoAlias2" required>
                         
-                        <option value="">Selecionar equipo 2</option>
+                        <option hidden value="">Selecionar equipo 2</option>
 
                         <?php 
 
@@ -366,9 +368,10 @@ MODAL EDITAR CALENDARIO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
-                <input type="text" class="form-control input-lg" id="editarJornada" name="editarJornada" value="" readonly>
+                <input type="text" class="form-control input-lg" id="editarJornada" name="editarJornada" value="" required>
+                <input type="hidden" id="idJornada" name="idJornada">
 
               </div>
 
@@ -450,7 +453,7 @@ MODAL EDITAR CALENDARIO
 
                       <select class="form-control input-lg" name="editarAlias1" required>
                         
-                        <option value="" id="editarAlias1"></option>
+                        <option hidden value="" id="editarAlias1"></<option>
 
                         <?php 
 
@@ -487,7 +490,7 @@ MODAL EDITAR CALENDARIO
 
                       <select class="form-control input-lg" name="editarAlias2" required>
                         
-                        <option value="" id="editarAlias2"></option>
+                        <option hidden value="" id="editarAlias2"></option>
 
                         <?php 
 
@@ -535,7 +538,8 @@ MODAL EDITAR CALENDARIO
 
         <?php 
 
-
+          $editarJornada = new ControladorCalendario();
+          $editarJornada -> ctrEditarJornada();
 
          ?>
 
@@ -549,8 +553,8 @@ MODAL EDITAR CALENDARIO
 
 <?php 
 
-
-
+  $eliminarJornada = new ControladorCalendario();
+  $eliminarJornada -> ctrEliminarJornada();
 
  ?>
 
