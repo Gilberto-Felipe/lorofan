@@ -73,28 +73,45 @@ $('.select2-single').select2();
 
 
 /*=============================================
-BOOTSTRAP TIMEPICKER
-=============================================*/
-
-$('#nuevaHora').timepicker();
-
-/*=============================================
 BOOTSTRAP DATEPICKER
 =============================================*/
 
 // No sé cómo ponerla el display en español, ni cómo cambiar el resaltado del día
 
-$(function(){
-	$('#nuevaFecha').datepicker({
-		isRTL: 'false',
-		format: 'dd-mm-yyyy',
-		todayHighlight: true,
-		autoclose: true,
-		locale: 'es'
-	});
-
-	$.fn.datepicker.dates['es'];
+$('#nuevaFecha').datepicker({
+	format: 'dd-mm-yyyy',
+	todayHighlight: true,
+	autoclose: true,
 });
 
+$('#editarFecha').datepicker({
+	format: 'dd-mm-yyyy',
+	todayHighlight: true,
+	autoclose: true,
+});
+
+/*=============================================
+BOOTSTRAP TIMEPICKER
+=============================================*/
+
+$('#nuevaHora').timepicker({
+	timeFormat: 'HH:mm',
+	minuteStep: 1,
+	template: 'modal',
+	appendWidgetTo: 'body',
+	showSeconds: true,
+	showMeridian: false,
+	defaultTime: false
+});
+
+$('#editarHora').timepicker({
+	timeFormat: 'HH:mm',
+	minuteStep: 1,
+	template: 'modal',
+	appendWidgetTo: 'body',
+	showSeconds: true,
+	showMeridian: false,
+	defaultTime: false
+});
 
 

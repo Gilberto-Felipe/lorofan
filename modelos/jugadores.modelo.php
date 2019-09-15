@@ -2,22 +2,21 @@
 
 require_once "conexion.php";
 
-class ModeloClientes{
+class ModeloPlantillaJugadores{
 
 	/*=============================================
-	CREAR CLIENTE
+	REGISTRAR JUGADOR EN LA PLANTILLA
 	=============================================*/
 
-	static public function mdlIngresarCliente($tabla, $datos){
+	static public function mdlRegistrarJugador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, documento, email, telefono, direccion, fecha_nacimiento) VALUES (:nombre, :documento, :email, :telefono, :direccion, :fecha_nacimiento)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, apellido, numero, posicion, foto) VALUES (:nombre, :apellido, :numero, :posicion, :foto)");
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_INT);
-		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
-		$stmt->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
-		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha_nacimiento", $datos["fecha_nacimiento"], PDO::PARAM_STR);
+		$stmt->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
+		$stmt->bindParam(":numero", $datos["numero"], PDO::PARAM_STR);
+		$stmt->bindParam(":posicion", $datos["posicion"], PDO::PARAM_STR);
+		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -35,10 +34,10 @@ class ModeloClientes{
 	}
 
 	/*=============================================
-	MOSTRAR CLIENTES
+	MOSTRAR PLANTILLA
 	=============================================*/
 
-	static public function mdlMostrarClientes($tabla, $item, $valor){
+	static public function mdlMostrarPlantilla($tabla, $item, $valor){
 
 		if($item != null){
 
@@ -67,19 +66,19 @@ class ModeloClientes{
 	}
 
 	/*=============================================
-	EDITAR CLIENTE
+	EDITAR PLANTILLA
 	=============================================*/
 
 	static public function mdlEditarCliente($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, documento = :documento, email = :email, telefono = :telefono, direccion = :direccion, fecha_nacimiento = :fecha_nacimiento WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, numero = :numero, posicion = :posicion, foto = :foto, fecha_nacimiento = :fecha_nacimiento WHERE id = :id");
 
-		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_INT);
-		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
-		$stmt->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
-		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
+		$stmt->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
+		$stmt->bindParam(":numero", $datos["numero"], PDO::PARAM_STR);
+		$stmt->bindParam(":posicion", $datos["posicion"], PDO::PARAM_STR);
+		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_nacimiento", $datos["fecha_nacimiento"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
@@ -132,7 +131,7 @@ class ModeloClientes{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_STR);
 
 		if($stmt -> execute()){
 

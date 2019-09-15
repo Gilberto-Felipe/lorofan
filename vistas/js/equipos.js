@@ -1,5 +1,5 @@
 /*=============================================
-=          SUBIR ESCUDO DEL EQUIPO            =
+SUBIR ESCUDO DEL EQUIPO AL MODAL AGREGAR EQUIPO Y AL MODAL EDITAR EQUIPO
 =============================================*/
 
 $(".nuevoEscudo").change(function(){
@@ -51,13 +51,13 @@ $(".nuevoEscudo").change(function(){
 });
 
 /*=============================================
-EDITAR EQUIPO
+LLENAR CAMPOS DEL MODAL EDITAR EQUIPO
 =============================================*/
 
 $(".tablas").on("click", ".btnEditarEquipo", function(){
 
 	let idEquipo = $(this).attr("idEquipo");
-	//console.log("idEquipo", idEquipo);
+	// console.log("idEquipo", idEquipo);
 
 	let datos = new FormData();
 	datos.append('idEquipo', idEquipo);
@@ -96,7 +96,7 @@ $(".tablas").on("click", ".btnEditarEquipo", function(){
 });
 
 /*=============================================
-EVITAR ALIAS REPETIDOS
+EVITAR ALIAS REPETIDOS EN EL MODAL AGREGAR EQUIPOS
 =============================================*/
 
 $("#nuevoAlias").change(function() {
@@ -104,6 +104,7 @@ $("#nuevoAlias").change(function() {
 	$(".alert").remove();
 	
 	let alias = $(this).val();
+ 	// console.log("alias ", alias);
 
 	let datos = new FormData();
 	datos.append('validarAlias', alias);

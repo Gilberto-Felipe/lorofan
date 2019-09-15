@@ -73,12 +73,13 @@ class ModeloEquipos{
 
 	static public function mdleditarEquipo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alias = :alias, nombre = :nombre, escudo = :escudo, estadio = :estadio WHERE alias = :alias");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET alias = :alias, nombre = :nombre, escudo = :escudo, estadio = :estadio WHERE id = :id");
 
 		$stmt -> bindParam(":alias", $datos["alias"], PDO::PARAM_STR);
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt -> bindParam(":escudo", $datos["escudo"], PDO::PARAM_STR);
 		$stmt -> bindParam(":estadio", $datos["estadio"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 		if ($stmt->execute()){
 			

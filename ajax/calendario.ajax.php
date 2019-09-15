@@ -1,39 +1,40 @@
 <?php 
 
-require_once "../controladores/categorias.controlador.php";
-require_once "../modelos/categorias.modelo.php";
+require_once "../controladores/calendario.controlador.php";
+require_once "../modelos/calendario.modelo.php";
 
 
-class AjaxCategorias{
-
-	/*=============================================
-	EVITAR INSERTAR CATEGORIAS REPETIDAS
-	=============================================*/
-	public $validarCategoria;
-	
-	public function ajaxValidarCategoria(){
-
-		$item = "categoria";
-		$valor = $this->validarCategoria;
-
-		$respuesta = ControladorCategorias::ctrMostrarCategorias($item, $valor);
-
-		echo json_encode($respuesta);
-
-	}
+class AjaxCalendario{
 
 	/*=============================================
-	EDITAR CATEGORIA
+	LLENAR EL MODAL EDITAR JORNADAS
 	=============================================*/
 
-	public $idCategoria;
+	public $idJornada;
 
-	public function ajaxEditarCategoria(){
+	public function ajaxEditarJornada(){
 
 		$item = "id";
-		$valor = $this->idCategoria;
+        $valor = $this->idJornada;
 
-		$respuesta = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
+
+		echo json_encode($respuesta);
+
+	}
+
+	/*=============================================
+	EVITAR JORNADAS REPETIDAS EN EL MODAL AGREGAR JORNADA
+	=============================================*/
+
+	public $validarJornada;
+
+	public function ajaxValidarJornada(){
+
+		$item = "jornada";
+		$valor = $this->validarJornada;
+
+		$respuesta = ControladorCalendario::ctrMostrarCalendario($item, $valor);
 
 		echo json_encode($respuesta);
 
@@ -41,28 +42,29 @@ class AjaxCategorias{
 
 }
 
+
 /*=============================================
-VALIDAR EVITAR CATEGORIAS REPETIDAS
+LLENAR MODAL EDITAR JORNADAS INSTANCIACIÓN
 =============================================*/
 
-if (isset($_POST['validarCategoria'])){
+if (isset($_POST['idJornada'])) {
 
-	$validarCategoria = new AjaxCategorias();
-	$validarCategoria -> validarCategoria = $_POST["validarCategoria"];
-	$validarCategoria -> ajaxValidarCategoria();
+	$idJornada = new AjaxCalendario();
+	$idJornada -> idJornada = $_POST['idJornada'];
+	$idJornada -> ajaxEditarJornada();
 
 }
 
 /*=============================================
-EDITAR CATEGORÍA
+EVITAR JORNADAS REPETIDAS EN MODAL AGREGAR JORNADAS INSTANCIACIÓN
 =============================================*/
 
-if (isset($_POST['idCategoria'])) {
-	
+if (isset($_POST['validarJornada'])){
+	//echo '<pre>'; print_r($_POST['validarJornada']); echo '</pre>';
 
-	$categoria = new AjaxCategorias();
-	$categoria -> idCategoria = $_POST['idCategoria'];
-	$categoria -> ajaxEditarCategoria();
+	$validarJornada = new AjaxCalendario();
+	$validarJornada -> validarJornada = $_POST["validarJornada"];
+	$validarJornada -> ajaxValidarJornada();
 
 }
 

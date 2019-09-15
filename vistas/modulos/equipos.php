@@ -38,9 +38,9 @@
             <tr>
                 
               <th style="width: 10px">#</th>
+              <th>Escudo</th>
               <th>Alias</th>
               <th>Nombre</th>
-              <th>Escudo</th>
               <th>Estadio</th>
               <th>Acciones</th>
 
@@ -63,23 +63,23 @@
                 echo 
                   '<tr>
                     
-                    <td>'.($key+1).'</td>
-                    <td>'.$value["alias"].'</td>
-                    <td>'.$value["nombre"].'</td>';
+                    <td>'.($key+1).'</td>';
 
-                      if ($value["escudo"] != "") {
+                    if ($value["escudo"] != "") {
                         
-                        echo '<td><img src="'.$value["escudo"].'" class="img-thumbnail" width="40px"></td>';
+                      echo '<td><img src="'.$value["escudo"].'" class="img-thumbnail" width="40px"></td>';
 
-                      }else {
+                    }else {
 
-                        echo '<td><img src="vistas/img/equipos/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
+                      echo '<td><img src="vistas/img/equipos/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
 
-                      }
+                    }
 
-                echo  
-                    '<td>'.$value["estadio"].'</td>
+              echo  '<td>'.$value["alias"].'</td>
+                    <td>'.$value["nombre"].'</td>
+                    <td>'.$value["estadio"].'</td>
                     <td>
+
                       <div class="btn-group">
                         
                         <button class="btn btn-warning btnEditarEquipo" idEquipo="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarEquipo"><i class="fa fa-pencil"></i></button>
@@ -87,6 +87,7 @@
                         <button class="btn btn-danger btnEliminarEquipo" idEquipo="'.$value["id"].'" imagenEscudo="'.$value["escudo"].'" equipo="'.$value["alias"].'"><i class="fa fa-times"></i></button>
 
                       </div>
+
                     </td> 
 
                   </tr>';
@@ -266,11 +267,10 @@ MODAL EDITAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-
-                <input type="hidden" id="idEquipo" name="idEquipo" value="" required>                
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>                
 
                 <input type="text" class="form-control input-lg" id="editarAlias" name="editarAlias" value="" required>
+                <input type="hidden" id="idEquipo" name="idEquipo">
 
               </div>
 
@@ -284,7 +284,7 @@ MODAL EDITAR EQUIPO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" class="form-control input-lg" id="editarEquipo" name="editarEquipo" value="" readonly>
+                <input type="text" class="form-control input-lg" id="editarEquipo" name="editarEquipo" value="" required>
 
               </div>
 

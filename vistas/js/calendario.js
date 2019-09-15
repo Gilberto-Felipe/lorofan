@@ -1,53 +1,17 @@
 /*=============================================
-EVITAR CATEGORIAS REPETIDAS
+EDITAR JORNADAS
 =============================================*/
 
-$(".nuevaCategoria").change(function() {
+$(".tablas").on("click", ".btnEditarJornada", function(){
 
-	$(".alert").remove();
-	
-	let categoria = $(this).val();
-
+	let idJornada = $(this).attr('idJornada');
+	console.log("idJornada ", idJornada);
+	 
 	let datos = new FormData();
-	datos.append('validarCategoria', categoria);
-
-		$.ajax({
-		url: 'ajax/categorias.ajax.php',
-		method: 'POST',
-		data: datos,
-		cache: false, 
-		contentType: false,
-		processData: false,
-		dataType: 'json',
-		success: function(respuesta){
-
-			if (respuesta) {
-
-				$(".nuevaCategoria").parent().after('<div class="alert alert-warning">Esta categoría ya existe en la base de datos.</div>');
-
-				$(".nuevaCategoria").val("");
-
-			}
-
-		}
-
-	});
-
-});
-
-/*=============================================
-EDITAR CATEGORIAS
-=============================================*/
-
-$(".btnEditarCategoria").click(function(){
-
-	let idCategoria = $(this).attr('idCategoria');
-
-	let datos = new FormData();
-	datos.append("idCategoria", idCategoria);
+	datos.append('idJornada', idJornada);
 
 	$.ajax({
-		url: 'ajax/categorias.ajax.php',
+		url:'ajax/calendario.ajax.php',
 		method: 'POST',
 		data: datos,
 		cache: false, 
@@ -56,26 +20,45 @@ $(".btnEditarCategoria").click(function(){
 		dataType: 'json',
 		success: function(respuesta){
 
-			$("#editarCategoria").val(respuesta["categoria"]);
-			$("#idCategoria").val(respuesta["id"]);
+			// console.log(respuesta);
+
+			$('#idJornada').val(respuesta['id']);
+            $('#editarJornada').val(respuesta['jornada']);
+
+            // SEPARAR Y FORMATEAR FECHA CON MOMENT.JS
+            let fechaSola = moment(respuesta["fecha"]).format('DD-MM-YYYY');
+            $('#editarFecha').val(fechaSola);
+
+            // SEPARAR Y FORMATEAR HORA CON MOMENT.JS
+            let horaSola = moment(respuesta["fecha"]).format('HH:mm');
+            $('#editarHora').val(horaSola);
+            
+            $('#editarEstadio').val(respuesta['lugar']);
+
+            $('#editarAlias1').html(respuesta['equipo1']);
+            $('#editarAlias1').val(respuesta['idEquipo1']);
+
+            $('#editarAlias2').html(respuesta['equipo2']);
+            $('#editarAlias2').val(respuesta['idEquipo2']);
 
 		}
 
 	});
-
+	
 });
 
+
 /*=============================================
-ELIMINAR CATEGORIAS
+ELIMINAR JORNADA
 =============================================*/
 
-$(".tablas").on("click", ".btnEliminarCategoria", function(){
+$(".tablas").on("click", ".btnEliminarJornada", function(){
 
-	let idCategoria = $(this).attr("idCategoria");
+	let idJornada = $(this).attr("idJornada");
 
 	swal({
 
-		title: "¿Estás seguro de eliminar la categoría?",
+		title: "¿Estás seguro de eliminar la jornada?",
 		text: "Puedes cancelar la acción",
 		type: 'warning',
 		showCancelButton: true,
@@ -88,7 +71,48 @@ $(".tablas").on("click", ".btnEliminarCategoria", function(){
 
 		if (result.value) {
 
-			window.location = "index.php?ruta=categorias&idCategoria="+idCategoria;
+			window.location = "index.php?ruta=calendario&idJornada="+idJornada;
+
+		}
+
+	});
+
+});
+
+
+/*=============================================
+EVITAR ALIAS REPETIDOS EN EL MODAL AGREGAR JORNADA
+=============================================*/
+
+$("#nuevaJornada").change(function() {
+
+	$(".alert").remove();
+	
+	let jornada = $(this).val();
+ 	// console.log("jornada ", jornada);
+
+	let datos = new FormData();
+	datos.append('validarJornada', jornada);
+
+		$.ajax({
+		url: 'ajax/calendario.ajax.php',
+		method: 'POST',
+		data: datos,
+		cache: false, 
+		contentType: false,
+		processData: false,
+		dataType: 'json',
+		success: function(respuesta){
+
+ 		// console.log("respuesta ", respuesta);
+
+			if (respuesta) {
+
+				$("#nuevaJornada").parent().after('<div class="alert alert-warning">Esta jornada ya existe en la base de datos.</div>');
+
+				$("#nuevaJornada").val("");
+
+			}
 
 		}
 

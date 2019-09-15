@@ -1,36 +1,50 @@
 <?php 
 
-class ControladorCategorias {
+class ControladorCalendario {
 
 	/*=============================================
-	MOSTRAR CATEGORÍAS
+	MOSTRAR JORNADAS
 	=============================================*/
 
-	static public function ctrMostrarCategorias($item, $valor){
+	static public function ctrMostrarCalendario($item, $valor){
 
-		$tabla = 'categorias';
+		$tabla = 'calendario';
 
-		$respuesta = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
+		$respuesta = ModeloCalendario::mdlMostrarCalendario($tabla, $item, $valor);
 
 		return $respuesta;
 
 	}
 
-
 	/*=============================================
-	CREAR CATEGORÍAS
+	CREAR JORNADA
 	=============================================*/
 
-	static public function ctrCrearCategoria(){
+	static public function ctrCrearJornada(){
 
-		if (isset($_POST['nuevaCategoria'])) {
+		if (isset($_POST['nuevaJornada'])) {
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevaCategoria'])) {
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['nuevaJornada'])) {
 
-				$tabla = 'categorias';
-				$datos = $_POST['nuevaCategoria'];
+				$tabla = 'calendario';
 
-				$respuesta = ModeloCategorias::mdlIngresarCategoria($tabla, $datos);
+				// FORMATEAR FECHA Y HORA PARA ENVIAR A BD
+
+				$fechaDatePicker = $_POST['nuevaFecha'];
+				$horaTimepicker = $_POST['nuevaHora'];
+				$fechaFormateada = date("Y-m-d H:i:s", strtotime($fechaDatePicker.$horaTimepicker));
+				
+				$datos = array(
+					'jornada' => $_POST['nuevaJornada'],
+					'fecha' => $fechaFormateada,
+					'lugar' => $_POST['nuevoEstadio'],
+					'equipo1' => $_POST['nuevoAlias1'],
+					'equipo2' => $_POST['nuevoAlias2']
+				);
+
+				//var_dump($datos);
+
+				$respuesta = ModeloCalendario::mdlCrearJornada($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -39,7 +53,7 @@ class ControladorCategorias {
 					swal({
 
 						type: "success",
-						title: "¡La categoría se ha guardado correctamente!",
+						title: "¡La jornada se ha guardado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -48,7 +62,7 @@ class ControladorCategorias {
 
 						if(result.value){
 
-							window.location = "categorias";
+							window.location = "calendario";
 
 						}
 
@@ -58,8 +72,8 @@ class ControladorCategorias {
 
 				}
 
-
-			} else{
+			} 
+			else{
 
 				echo '<script>
 
@@ -86,71 +100,85 @@ class ControladorCategorias {
 			}
 
 		}
-
+			
 	}
 
 	/*=============================================
-	EDITAR CATEGORÍA
+	EDITAR JORNADA
 	=============================================*/
 
-	static public function ctrEditarCategoria(){
+	static public function ctrEditarJornada(){
 
-		if (isset($_POST['editarCategoria'])) {
+		if (isset($_POST["editarJornada"])) {
 			
-			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['editarCategoria'])) {
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST['editarJornada'])){
+				
+				$tabla = 'calendario';
 
-				$tabla = 'categorias';
-				$datos = array("categoria" => $_POST['editarCategoria'],
-								"id" => $_POST['idCategoria']);
+				// FORMATEAR FECHA Y HORA PARA ENVIAR DATOS A BD
+				$fechaDatePicker = $_POST['editarFecha'];
+				$horaTimepicker = $_POST['editarHora'];
+				$fechaFormateada = date("Y-m-d H:i:s", strtotime($fechaDatePicker.$horaTimepicker));
+				
+				$datos = array(
+					'id' => $_POST['idJornada'],
+					'jornada' => $_POST['editarJornada'],
+					'fecha' => $fechaFormateada,
+					'lugar' => $_POST['editarEstadio'],
+					'equipo1' => $_POST['editarAlias1'],
+					'equipo2' => $_POST['editarAlias2']
+				);
 
-				$respuesta = ModeloCategorias::mdlEditarCategoria($tabla, $datos);
+				$respuesta = ModeloCalendario::mdlEditarJornada($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
 					echo '<script>
 
-					swal({
+							swal({
 
-						type: "success",
-						title: "¡La categoría se modificó correctamente!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"					
-				
-					}).then((result)=>{
+								type: "success",
+								title: "¡La jornada ha sido editada correctamente!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false						
+						
+							}).then((result)=>{
 
-						if(result.value){
+								if(result.value){
 
-							window.location = "categorias";
+									window.location = "calendario";
 
-						}
+								}
 
-					});
+							});
 
-					</script>';
+							</script>';
 
 				}
 
-
-			} else{
+			}
+			else{
 
 				echo '<script>
 
-					swal({
+						swal({
 
-						type: "error",
-						title: "¡La categoría no puede ir vacía o llevar caracteres especiales!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"		
-				
-					}).then((result)=>{
+							type: "error",
+							title: "¡La jornada no debe ir vacía o llevar caracteres especiales!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							closeOnConfirm: false						
+					
+						}).then((result)=>{
 
-						if(result.value){
+							if(result.value){
 
-							window.location = "categorias";
+								window.location = "calendario";
 
-						}
+							}
 
-					});
+						});
 
 					</script>';
 
@@ -161,18 +189,21 @@ class ControladorCategorias {
 	}
 
 	/*=============================================
-	ELIMINAR CATEGORÍA
+	ELIMINAR JORNADA             
 	=============================================*/
 
-	static public function ctrBorrarCategoria(){
+	public function ctrEliminarJornada(){
 
-		if (isset($_GET['idCategoria'])) {
-			
-			$tabla = "categorias";
-			$datos = $_GET['idCategoria'];
+		if(isset($_GET['idJornada'])){
+ 
+			if($_GET["idJornada"]){
 
-			$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
+				//var_dump($_GET["idJornada"]);
 
+				$tabla = 'calendario';
+				$datos = $_GET['idJornada'];
+
+				$respuesta = ModeloCalendario::mdlEliminarCalendario($tabla, $datos);
 
 				if ($respuesta == "ok") {
 					
@@ -181,7 +212,7 @@ class ControladorCategorias {
 					swal({
 
 						type: "success",
-						title: "¡La categoría ha sido eliminada correctamente!",
+						title: "¡La jornada ha sido eliminado correctamente!",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar",
 						closeOnConfirm: false						
@@ -190,7 +221,7 @@ class ControladorCategorias {
 
 						if(result.value){
 
-							window.location = "categorias";
+							window.location = "calendario";
 
 						}
 
@@ -200,9 +231,11 @@ class ControladorCategorias {
 
 				}
 
+			}
 
 		}
 
 	}
 
+				
 }

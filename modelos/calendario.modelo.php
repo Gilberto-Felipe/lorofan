@@ -2,18 +2,26 @@
 
 require_once "conexion.php";
 
-class ModeloCategorias{
-
+class ModeloCalendario{
 
 	/*=============================================
-	MOSTRAR CATEGORÍAS            
+	MOSTRAR JORNADAS            
 	=============================================*/
 
-	static public function mdlMostrarCategorias($tabla, $item, $valor){
+	static public function mdlMostrarCalendario($tabla, $item, $valor){
 
 		if ($item != null) {
-			
-			$stmt = Conexion::conectar()->prepare("SELECT * from $tabla WHERE $item = :$item");
+
+			$stmt = Conexion::conectar()->prepare(
+				"SELECT 
+					C.id, C.jornada, C.fecha, C.lugar, 
+					A.alias as equipo1, B.alias as equipo2,
+					C.equipo1 as idEquipo1, C.equipo2 as idEquipo2
+				FROM 
+					$tabla AS C JOIN equipos AS A ON C.equipo1 = A.id
+					JOIN equipos AS B ON B.id = C.equipo2
+				WHERE C.$item = :$item"
+			);
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -24,7 +32,14 @@ class ModeloCategorias{
 		} 
 		else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * from $tabla");
+			$stmt = Conexion::conectar()->prepare(
+				"SELECT 
+					C.id, C.jornada, C.fecha, C.lugar, 
+					A.alias as equipo1, B.alias as equipo2
+				FROM 
+					$tabla AS C JOIN equipos AS A ON C.equipo1 = A.id
+					JOIN equipos AS B ON B.id = C.equipo2"
+			);
 
 			$stmt -> execute();
 
@@ -38,14 +53,18 @@ class ModeloCategorias{
 	}
 
 	/*=============================================
-	CREAR CATEGORÍAS
+	CREAR JORNADAS
 	=============================================*/
 
-	static public function mdlIngresarCategoria($tabla, $datos){
+	static public function mdlCrearJornada($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(categoria) VALUES(:categoria)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(jornada, fecha, lugar, equipo1, equipo2) VALUES(:jornada, :fecha, :lugar, :equipo1, :equipo2)");
 
-		$stmt -> bindParam(":categoria", $datos, PDO::PARAM_STR);
+		$stmt->bindParam(":jornada", $datos["jornada"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":lugar", $datos["lugar"], PDO::PARAM_STR);
+		$stmt->bindParam(":equipo1", $datos["equipo1"], PDO::PARAM_STR);
+		$stmt->bindParam(":equipo2", $datos["equipo2"], PDO::PARAM_STR);
 
 		if ($stmt->execute()){
 			
@@ -65,16 +84,21 @@ class ModeloCategorias{
 	}
 
 	/*=============================================
-	EDITAR CATEGORÍA
+	EDITAR JORNADAS
 	=============================================*/
 
-	static public function mdlEditarCategoria($tabla, $datos){
+	static public function mdlEditarJornada($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET categoria = :categoria WHERE id = :id");
+		var_dump($datos);
 
-		$stmt -> bindParam(":categoria", $datos['categoria'], PDO::PARAM_STR);
-		$stmt -> bindParam(":id", $datos['id'], PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET jornada = :jornada, fecha = :fecha, lugar = :lugar, equipo1 = :equipo1, equipo2 = :equipo2 WHERE id = :id");
 
+		$stmt -> bindParam(":jornada", $datos["jornada"], PDO::PARAM_STR);
+		$stmt -> bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt -> bindParam(":lugar", $datos["lugar"], PDO::PARAM_STR);
+		$stmt -> bindParam(":equipo1", $datos["equipo1"], PDO::PARAM_INT);
+		$stmt -> bindParam(":equipo2", $datos["equipo2"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
 		if ($stmt->execute()){
 			
@@ -93,10 +117,10 @@ class ModeloCategorias{
 	}
 
 	/*=============================================
-	ELIMINAR CATEGORÍA
+	ELIMINAR JORNADA
 	=============================================*/
 
-		static public function mdlBorrarCategoria($tabla, $datos){
+	static public function mdlEliminarCalendario($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
