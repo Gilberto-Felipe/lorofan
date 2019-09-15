@@ -1,6 +1,5 @@
 /*=============================================
-SUBIR ESCUDO DEL EQUIPO AL MODAL AGREGAR EQUIPO
-Y AL MODAL EDITAR EQUIPO
+SUBIR ESCUDO DEL EQUIPO AL MODAL AGREGAR EQUIPO Y AL MODAL EDITAR EQUIPO
 =============================================*/
 
 $(".nuevoEscudo").change(function(){

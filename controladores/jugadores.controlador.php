@@ -1,46 +1,130 @@
 <?php
 
-class ControladorClientes{
+class ControladorPlantillaJugadores{
 
 	/*=============================================
-	CREAR CLIENTES
+	REGISTRAR JUGADOR EN LA PLANTILLA
 	=============================================*/
 
-	static public function ctrCrearCliente(){
+	static public function ctrRegistrarJugador(){
 
-		if(isset($_POST["nuevoCliente"])){
+		if(isset($_POST["nuevoNombre"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoCliente"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoDocumentoId"]) &&
-			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["nuevoEmail"]) && 
-			   preg_match('/^[()\-0-9 ]+$/', $_POST["nuevoTelefono"]) && 
-			   preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["nuevaDireccion"])){
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nuevoNombre"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nuevoApellido"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nuevoNumero"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nuevaPosicion"])) {
 
-			   	$tabla = "clientes";
+				/*=============================================
+				VALIDAR FOTO DEL JUGADOR
+				=============================================*/
 
-			   	$datos = array("nombre"=>$_POST["nuevoCliente"],
-					           "documento"=>$_POST["nuevoDocumentoId"],
-					           "email"=>$_POST["nuevoEmail"],
-					           "telefono"=>$_POST["nuevoTelefono"],
-					           "direccion"=>$_POST["nuevaDireccion"],
-					           "fecha_nacimiento"=>$_POST["nuevaFechaNacimiento"]);
+				$ruta = "";			
 
-			   	$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
+				if (isset($_FILES['nuevaFoto']['tmp_name'])) {
 
-			   	if($respuesta == "ok"){
+					/*=============================================
+					OBTENER EL TAMAÑO DE LA IMAGEN Y FORMATEARLA
+					=============================================*/
+
+					list($ancho, $alto) = getimagesize($_FILES['nuevaFoto']['tmp_name']);
+
+					$nuevoAncho = 500;
+					$nuevoAlto = 500;
+
+					/*=============================================
+					CREAR DIRECTORIO PARA GUARDAR LA IMAGEN
+					=============================================*/
+					
+					// CREAR ID ÚNICO PARA CADA JUGADOR: CONCATENER NOMBRE + NÚMERO
+					// Y QUITAR ESPACIOS EN BLANCO PARA PASARLO COMO RUTA
+
+					$foto = $_POST['nuevoNombre'].$_POST["nuevoNumero"];
+					$foto = str_replace(" ", "", $foto);
+
+					$directorio = "vistas/img/plantillaJugadores/".$foto;
+
+					// OTORGAR PERMISOS DE ADMINISTRADOR 
+					mkdir($directorio, 0755);
+
+					/*=============================================
+					VALIDAR TIPO DE IMAGEN APLICANDO FUNCIONES DE PHP
+					=============================================*/	
+
+					if ($_FILES['nuevaFoto']['type'] == 'image/jpeg') {
+						
+						/*=============================================
+						GUARDAR IMAGEN EN DIRECTORIO
+						=============================================*/
+
+						$aleatorio = mt_rand(100, 999);
+
+						$ruta = "vistas/img/plantillaJugadores/".$foto."/".$aleatorio.".jpg";
+
+						$origen = imagecreatefromjpeg($_FILES['nuevaFoto']['tmp_name']);
+
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagejpeg($destino, $ruta);
+
+					}
+
+					if ($_FILES['nuevaFoto']['type'] == 'image/png') {
+						
+						/*=============================================
+						GUARDAR IMAGEN EN  DIRECTORIO
+						=============================================*/
+
+						$aleatorio = mt_rand(100, 999);
+
+						$ruta = "vistas/img/plantillaJugadores/".$foto."/".$aleatorio.".png";
+
+						$origen = imagecreatefrompng($_FILES['nuevaFoto']['tmp_name']);
+
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagepng($destino, $ruta);
+
+					}
+
+				}
+
+				/*=============================================
+				ENVIAR DATOS AL MODELO
+				=============================================*/
+
+			   	$tabla = "plantilla";
+
+			   	$datos = array(
+					"nombre" => $_POST["nuevoNombre"],
+					"apellido" => $_POST["nuevoApellido"],
+					"numero" => $_POST["nuevoNumero"],
+					"posicion" => $_POST["nuevaPosicion"],
+					"foto" => $ruta
+				);
+				
+				// var_dump($datos);
+
+			   	$respuesta = ModeloPlantillaJugadores::mdlRegistrarJugador($tabla, $datos);
+
+			   if($respuesta == "ok"){
 
 					echo'<script>
 
 					swal({
 						  type: "success",
-						  title: "El cliente se guardó correctamente",
+						  title: "El jugador se registró correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 
 								if (result.value) {
 
-									window.location = "clientes";
+									window.location = "jugadores";
 
 								}
 
@@ -56,13 +140,13 @@ class ControladorClientes{
 
 					swal({
 						  type: "error",
-						  title: "¡El cliente no puede ir vacío o llevar caracteres especiales!",
+						  title: "¡El nombre no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "clientes";
+							window.location = "jugadores";
 
 							}
 						})
@@ -76,14 +160,14 @@ class ControladorClientes{
 	}
 
 	/*=============================================
-	MOSTRAR CLIENTES
+	MOSTRAR PLANTILLA 
 	=============================================*/
 
-	static public function ctrMostrarClientes($item, $valor){
+	static public function ctrMostrarPlantilla($item, $valor){
 
-		$tabla = "clientes";
+		$tabla = "plantilla";
 
-		$respuesta = ModeloClientes::mdlMostrarClientes($tabla, $item, $valor);
+		$respuesta = ModeloPlantillaJugadores::mdlMostrarPlantilla($tabla, $item, $valor);
 
 		return $respuesta;
 

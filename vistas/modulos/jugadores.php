@@ -1,367 +1,421 @@
 
 <div class="content-wrapper">
 
-  <section class="content-header">
+<section class="content-header">
 
-    <h1>
+  <h1>
 
-      Administrar clientes
+    Administrar plantilla de jugadores
 
-    </h1>
+  </h1>
 
-    <ol class="breadcrumb">
+  <ol class="breadcrumb">
 
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Administrar clientes</li>
+    <li class="active">Administrar plantilla de jugadores</li>
 
-    </ol>
+  </ol>
 
-  </section>
+</section>
 
-  <section class="content">
+<section class="content">
 
-    <div class="box">
+  <div class="box">
 
-      <div class="box-header with-border">
+    <div class="box-header with-border">
 
-        <button class="btn btn-primary" id="agregarCliente" data-toggle="modal" data-target="#modalAgregarCliente">Agregar cliente</button>
+      <button class="btn btn-success" id="btnAgregarJugador" data-toggle="modal" data-target="#modalAgregarJugador">Agregar jugador</button>
 
-      </div>
+    </div>
 
-      <div class="box-body">
+    <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablaClientes" width="100%">
+      <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
 
-          <thead> 
+        <thead> 
 
-            <tr>
-                
-              <th style="width: 10px">#</th>
-              <th>Nombre</th>
-              <th>Documento ID</th>
-              <th>Email</th> 
-              <th>Teléfono</th> 
-              <th>Dirección</th>
-              <th>Fecha nacimiento</th> 
-              <th>Total compras</th> 
-              <th>Última compra</th> 
-              <th>Ingreso al sistema</th> 
-              <th>Acciones</th> 
+          <tr>
+              
+            <th style="width: 10px">#</th>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Número</th>
+            <th>Posición</th>
+            <th>Acciones</th>
 
-            </tr>
+          </tr>
 
-          </thead>
+        </thead>
+
+        <tbody>
+
+          <?php 
+
+            $item = null;
+            $valor = null;
+
+            $jugadores = ControladorPlantillaJugadores::ctrMostrarPlantilla($item, $valor);
+
+            // var_dump($jugadores);
+
+            foreach ($jugadores as $key => $value) {
+
+              echo 
+                '<tr>
+                  
+                  <td>'.($key+1).'</td>';
+
+                  if ($value["foto"] != "") {
+                      
+                    echo '<td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>';
+
+                  }else {
+
+                    echo '<td><img src="vistas/img/plantillaJugadores/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
+
+                  }
+
+            echo  '<td>'.$value["nombre"].'</td>
+                  <td>'.$value["apellido"].'</td>
+                  <td>'.$value["numero"].'</td>
+                  <td>'.$value["posicion"].'</td>
+                  <td>
+
+                    <div class="btn-group">
+                      
+                      <button class="btn btn-warning btnEditarJugador" idJugador="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarJugador"><i class="fa fa-pencil"></i></button>
+
+                      <button class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'" foto="'.$value["foto"].'"><i class="fa fa-times"></i></button>
+
+                    </div>
+
+                  </td> 
+
+                </tr>';
+
+            }
+
+          ?>
+
+        </tbody>
           
-           
-        </table>
+      </table>
 
-      </div>
+    </div>
 
-    </div><!-- /.box -->
+  </div><!-- /.box -->
 
-  </section><!-- /.content -->
+</section><!-- /.content -->
 
 </div><!-- /.content-wrapper -->
 
 
 <!--=====================================
-MODAL AGREGAR CLIENTE
+MODAL AGREGAR JUGADOR
 ======================================-->
 
-<div id="modalAgregarCliente" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
+<div id="modalAgregarJugador" class="modal fade" role="dialog">
 
-    <div class="modal-content">
+<div class="modal-dialog">
 
-      <form role="form" method="post">
+  <div class="modal-content">
 
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
+    <form role="form" method="post" enctype="multipart/form-data">
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+      <!--=====================================
+      CABEZA DEL MODAL
+      ======================================-->
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header" style="background:#00a65a; color:white">
 
-          <h4 class="modal-title">Agregar cliente</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-        </div>
+        <h4 class="modal-title">Agregar jugador</h4>
 
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
+      </div>
 
-        <div class="modal-body">
+      <!--=====================================
+      CUERPO DEL MODAL
+      ======================================-->
 
-          <div class="box-body">
+      <div class="modal-body">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
+        <div class="box-body">
+
+          <!-- ENTRADA PARA EL NOMBRE -->
+          
+          <div class="form-group">
             
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevoCliente" placeholder="Ingresar nombre" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL DOCUMENTO ID -->
+            <div class="input-group">
             
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+              <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="numnber" min="0" class="form-control input-lg" id="nuevoDocumentoId" name="nuevoDocumentoId" placeholder="Ingresar documento id" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL EMAIL -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
-
-                <input type="email" class="form-control input-lg" name="nuevoEmail" placeholder="Ingresar email" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL TELÉFONO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA DIRECCIÓN -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar dirección" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA FECHA NACIMIENTO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevaFechaNacimiento" placeholder="Ingresar fecha de nacimiento" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask required>
-
-              </div>
+              <input type="text" class="form-control input-lg" id="nuevoNombre" name="nuevoNombre" placeholder="Ingresar nombre" required>
 
             </div>
 
           </div>
 
-        </div>
+          <!-- ENTRADA PARA EL APELLIDO -->
 
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
+           <div class="form-group">
+            
+            <div class="input-group">
+            
+              <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-        <div class="modal-footer">
+              <input type="text" class="form-control input-lg" name="nuevoApellido" placeholder="Ingresar apellido" required>
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Guardar cliente</button>
+          </div>
 
-        </div>
+          <div class="form-group row">
 
-      </form>
+            <div class="input-group">
+
+              <!-- ENTRADA PARA EL NÚMERO DEL JUGADOR -->
+
+              <div class="col-xs-6">
+
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                  
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+
+                    <input type="text" class="form-control input-lg" name="nuevoNumero" placeholder="Ingresar número" required>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- ENTRADA PARA LA POSICIÓN -->
+
+              <div class="col-xs-6">
+
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                  
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+
+                    <input type="text" class="form-control input-lg" name="nuevaPosicion" placeholder="Ingresar posición" required>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div><!-- .input-group -->
+
+          </div><!-- .form-group row -->
+
+          <!-- ENTRADA PARA SUBIR FOTO DEL JUGADOR -->
+
+          <div class="form-group">
+            
+            <div class="panel">SUBIR FOTO</div>
+
+            <input type="file" class="nuevaFoto" name="nuevaFoto">
+
+            <p class="help-block">Peso máximo de la foto 2MB</p>
+
+            <img src="vistas/img/plantillaJugadores/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
+
+          </div>
+
+        </div><!-- .box-body-->
+
+      </div><!-- .modal-body-->
+
+      <!--=====================================
+      PIE DEL MODAL
+      ======================================-->
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+        <button type="submit" class="btn btn-success">Guardar Jugador</button>
+
+      </div>
 
       <?php 
 
-            $crearCliente = new ControladorClientes();
-            $crearCliente -> ctrCrearCliente();
+        $registrarJugador = new ControladorPlantillaJugadores();
+        $registrarJugador -> ctrRegistrarJugador();
 
       ?>
 
-    </div>
+    </form>
 
   </div>
 
 </div>
+
+</div>
+
 
 <!--=====================================
-MODAL EDITAR CLIENTE
+MODAL EDITAR JUGADOR
 ======================================-->
 
-<div id="modalEditarCliente" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
+<div id="modalEditarJugador" class="modal fade" role="dialog">
 
-    <div class="modal-content">
+<div class="modal-dialog">
 
-      <form role="form" method="post">
+  <div class="modal-content">
 
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
+    <form role="form" method="post" enctype="multipart/form-data">
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+      <!--=====================================
+      CABEZA DEL MODAL
+      ======================================-->
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header" style="background:#00a65a; color:white">
 
-          <h4 class="modal-title">Editar cliente</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-        </div>
+        <h4 class="modal-title">Editar jugador</h4>
 
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
+      </div>
 
-        <div class="modal-body">
+      <!--=====================================
+      CUERPO DEL MODAL
+      ======================================-->
 
-          <div class="box-body">
+      <div class="modal-body">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
+        <div class="box-body">
+
+          <!-- ENTRADA PARA EL NOMBRE -->
+          
+          <div class="form-group">
             
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+            <div class="input-group">
+            
+              <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarCliente" id="editarCliente" required>
-                <input type="hidden" id="idCliente" name="idCliente">
-              </div>
+              <input type="text" class="form-control input-lg" id="editarNombre" name="editarNombre" required>
+              <input type="hidden" id="idJugador" name="idJugador">
 
             </div>
 
-            <!-- ENTRADA PARA EL DOCUMENTO ID -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
-
-                <input type="number" min="0" class="form-control input-lg" name="editarDocumentoId" id="editarDocumentoId" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL EMAIL -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
-
-                <input type="email" class="form-control input-lg" name="editarEmail" id="editarEmail" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL TELÉFONO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="editarTelefono" id="editarTelefono" data-inputmask="'mask':'(999) 999-9999'" data-mask required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA DIRECCIÓN -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion" required>
-
-              </div>
-
-            </div>
-
-             <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="editarFechaNacimiento" id="editarFechaNacimiento"  data-inputmask="'alias': 'yyyy/mm/dd'" data-mask required>
-
-              </div>
-
-            </div>
-  
           </div>
 
-        </div>
+          <!-- ENTRADA PARA EL APELLIDO -->
 
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
+           <div class="form-group">
+            
+            <div class="input-group">
+            
+              <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-        <div class="modal-footer">
+              <input type="text" class="form-control input-lg" id="editarApellido" name="editarApellido" required>
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </div>
 
-        </div>
+          <div class="form-group row">
 
-      </form>
+            <div class="input-group">
 
-      <?php
+              <!-- ENTRADA PARA EL NÚMERO DEL JUGADOR -->
 
-        $editarCliente = new ControladorClientes();
-        $editarCliente -> ctrEditarCliente();
+              <div class="col-xs-6">
 
-      ?>
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                  
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
-    </div>
+                    <input type="text" class="form-control input-lg" id="editarNumero" name="editarNumero" required>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- ENTRADA PARA LA POSICIÓN -->
+
+              <div class="col-xs-6">
+
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                  
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="nuevaPosicion" name="nuevaPosicion" required>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div><!-- .input-group -->
+
+          </div><!-- .form-group row -->
+
+          <!-- ENTRADA PARA SUBIR FOTO DEL JUGADOR -->
+
+          <div class="form-group">
+            
+            <div class="panel">SUBIR FOTO</div>
+
+            <input type="file" class="nuevaFoto" name="editarFoto">
+
+            <p class="help-block">Peso máximo de la foto 2MB</p>
+
+            <img src="vistas/img/plantillaJugadores/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
+            <input type="hidden" id="fotoActual" name="fotoActual">
+
+          </div>
+
+        </div><!-- .box-body-->
+
+      </div><!-- .modal-body-->
+
+      <!--=====================================
+      PIE DEL MODAL
+      ======================================-->
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+        <button type="submit" class="btn btn-success">Modificar Jugardor</button>
+
+      </div>
+
+        <?php 
+
+          //$editarEquipo = new ControladorEquipos();
+          //$editarEquipo -> ctrEditarEquipo();
+          
+         ?>
+
+    </form>
 
   </div>
 
 </div>
 
-<?php
+</div>
 
-  $eliminarCliente = new ControladorClientes();
-  $eliminarCliente -> ctrEliminarCliente();
+<?php 
+
+  //$borrarEquipo = new ControladorEquipos();
+  //$borrarEquipo -> ctrBorrarEquipo();
 
 ?>
