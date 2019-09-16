@@ -270,6 +270,10 @@ class ControladorEquipos {
 
 				}	
 
+				/*=============================================
+				ENVIAR DATOS AL MODELO
+				=============================================*/
+				
 				$tabla = 'equipos';
 
 				$datos = array(

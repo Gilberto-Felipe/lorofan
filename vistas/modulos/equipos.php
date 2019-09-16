@@ -269,7 +269,7 @@ MODAL EDITAR EQUIPO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>                
 
-                <input type="text" class="form-control input-lg" id="editarAlias" name="editarAlias" value="" required>
+                <input type="text" class="form-control input-lg" id="editarAlias" name="editarAlias" value="" readonly>
                 <input type="hidden" id="idEquipo" name="idEquipo">
 
               </div>
@@ -353,7 +353,7 @@ MODAL EDITAR EQUIPO
 
 <?php 
 
-$borrarEquipo = new ControladorEquipos();
-$borrarEquipo -> ctrBorrarEquipo();
+    $borrarEquipo = new ControladorEquipos();
+    $borrarEquipo -> ctrBorrarEquipo();
 
 ?>

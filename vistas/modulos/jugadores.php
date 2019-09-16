@@ -87,7 +87,7 @@
                       
                       <button class="btn btn-warning btnEditarJugador" idJugador="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarJugador"><i class="fa fa-pencil"></i></button>
 
-                      <button class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'" foto="'.$value["foto"].'"><i class="fa fa-times"></i></button>
+                      <button class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'" jugador="'.$value["nombre"].'" numero="'.$value["numero"].'" foto="'.$value["foto"].'"><i class="fa fa-times"></i></button>
 
                     </div>
 
@@ -302,7 +302,7 @@ MODAL EDITAR JUGADOR
             
               <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-              <input type="text" class="form-control input-lg" id="editarNombre" name="editarNombre" required>
+              <input type="text" class="form-control input-lg" id="editarNombre" name="editarNombre" readonly>
               <input type="hidden" id="idJugador" name="idJugador">
 
             </div>
@@ -337,7 +337,7 @@ MODAL EDITAR JUGADOR
                   
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
-                    <input type="text" class="form-control input-lg" id="editarNumero" name="editarNumero" required>
+                    <input type="text" class="form-control input-lg" id="editarNumero" name="editarNumero" readonly>
 
                   </div>
 
@@ -355,7 +355,7 @@ MODAL EDITAR JUGADOR
                   
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
-                    <input type="text" class="form-control input-lg" id="nuevaPosicion" name="nuevaPosicion" required>
+                    <input type="text" class="form-control input-lg" id="editarPosicion" name="editarPosicion" required>
 
                   </div>
 
@@ -400,8 +400,8 @@ MODAL EDITAR JUGADOR
 
         <?php 
 
-          //$editarEquipo = new ControladorEquipos();
-          //$editarEquipo -> ctrEditarEquipo();
+          $editarJugador = new ControladorPlantillaJugadores();
+          $editarJugador -> ctrEditarJugador();
           
          ?>
 
@@ -415,7 +415,7 @@ MODAL EDITAR JUGADOR
 
 <?php 
 
-  //$borrarEquipo = new ControladorEquipos();
-  //$borrarEquipo -> ctrBorrarEquipo();
+  $eliminarJugador = new ControladorPlantillaJugadores();
+  $eliminarJugador -> ctrEliminarJugador();
 
 ?>

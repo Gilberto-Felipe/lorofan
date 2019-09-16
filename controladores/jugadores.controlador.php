@@ -36,8 +36,7 @@ class ControladorPlantillaJugadores{
 					CREAR DIRECTORIO PARA GUARDAR LA IMAGEN
 					=============================================*/
 					
-					// CREAR ID ÚNICO PARA CADA JUGADOR: CONCATENER NOMBRE + NÚMERO
-					// Y QUITAR ESPACIOS EN BLANCO PARA PASARLO COMO RUTA
+					// CREAR ID ÚNICO PARA CADA JUGADOR: CONCATENER NOMBRE + NÚMERO Y QUITAR ESPACIOS EN BLANCO PARA PASARLO COMO RUTA
 
 					$foto = $_POST['nuevoNombre'].$_POST["nuevoNumero"];
 					$foto = str_replace(" ", "", $foto);
@@ -174,76 +173,159 @@ class ControladorPlantillaJugadores{
 	}
 
 	/*=============================================
-	EDITAR CLIENTE
+	EDITAR JUGADOR
 	=============================================*/
 
-	static public function ctrEditarCliente(){
+	static public function ctrEditarJugador(){
 
-		if(isset($_POST["editarCliente"])){
+		if(isset($_POST["editarNombre"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarCliente"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["editarDocumentoId"]) &&
-			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["editarEmail"]) && 
-			   preg_match('/^[()\-0-9 ]+$/', $_POST["editarTelefono"]) && 
-			   preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["editarDireccion"])){
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["editarNombre"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["editarNumero"])) {
 
-			   	$tabla = "clientes";
+				/*=============================================
+				VALIDAR FOTO DEL JUGADOR
+				=============================================*/
 
-			   	$datos = array("id"=>$_POST["idCliente"],
-			   				   "nombre"=>$_POST["editarCliente"],
-					           "documento"=>$_POST["editarDocumentoId"],
-					           "email"=>$_POST["editarEmail"],
-					           "telefono"=>$_POST["editarTelefono"],
-					           "direccion"=>$_POST["editarDireccion"],
-					           "fecha_nacimiento"=>$_POST["editarFechaNacimiento"]);
+				$ruta = $_POST['fotoActual'];
 
-			   	$respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
+				if (isset($_FILES['editarFoto']['tmp_name']) && !empty($_FILES["editarFoto"]["tmp_name"])) {
+
+					list($ancho, $alto) = getimagesize($_FILES['editarFoto']['tmp_name']);
+
+					$nuevoAncho = 500;
+					$nuevoAlto = 500;
+
+					/*=============================================
+					CREAR DIRECTORIO PARA GUARDAR LA IMAGEN
+					=============================================*/
+					//* CREAR ID ÚNICO PARA CADA JUGADOR: CONCATENER NOMBRE + NÚMERO Y QUITAR ESPACIOS EN BLANCO PARA PASARLO COMO RUTA DEL DIRECTORIO
+
+					$editarAlias = $_POST['editarNombre'].$_POST["editarNumero"];
+					$editarAlias = str_replace(" ", "", $editarAlias);
+
+					$directorio = "vistas/img/plantillaJugadores/".$editarAlias;
+
+					/*=============================================
+					PREGUNTAMOS SI EXISTE OTRA FOTO EN LA BD Y LA ELIMINAMOS O CREAMOS UN NUEVO DIRECTORIO
+					=============================================*/
+
+					if(!empty($_POST['fotoActual'])){
+
+						unlink($_POST['fotoActual']);
+
+					} else {
+
+						mkdir($directorio, 0755);
+
+					}
+
+					/*=============================================
+					VALIDAR TIPO DE IMAGEN (JPEG O PNG) APLICANDO FUNCIONES DE PHP
+					=============================================*/	
+
+					if ($_FILES['editarFoto']['type'] == 'image/jpeg') {
+						
+						/*=============================================
+						GUARDAR IMAGEN EN  DIRECTORIO
+						=============================================*/
+
+						$aleatorio = mt_rand(100, 999);
+
+						$ruta = "vistas/img/plantillaJugadores/".$editarAlias."/".$aleatorio.".jpg";
+
+						$origen = imagecreatefromjpeg($_FILES['editarFoto']['tmp_name']);
+
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagejpeg($destino, $ruta);
+
+					}
+
+					if ($_FILES['editarFoto']['type'] == 'image/png') {
+						
+						/*=============================================
+						GUARDAR IMAGEN EN  DIRECTORIO
+						=============================================*/
+
+						$aleatorio = mt_rand(100, 999);
+
+						$ruta = "vistas/img/plantillaJugadores/".$editarAlias."/".$aleatorio.".png";
+
+						$origen = imagecreatefrompng($_FILES['editarFoto']['tmp_name']);
+
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagepng($destino, $ruta);
+
+					}
+
+				}	
+
+				/*=============================================
+				ENVIAR DATOS AL MODELO
+				=============================================*/
+
+			   	$tabla = "plantilla";
+
+			   	$datos = array(
+					"id" => $_POST['idJugador'],
+					"nombre" => $_POST["editarNombre"],
+					"apellido" => $_POST["editarApellido"],
+					"numero" => $_POST["editarNumero"],
+					"posicion" => $_POST["editarPosicion"],
+					"foto" => $ruta
+				);
+				
+				// var_dump($datos);
+
+			   	$respuesta = ModeloPlantillaJugadores::mdlEditarJugador($tabla, $datos);
 
 			   	if($respuesta == "ok"){
 
 					echo'<script>
 
-					swal({
-						
-						  type: "success",
-						  title: "El cliente se cambió correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+						swal({
+							type: "success",
+							title: "El jugador se registró correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
 
-							if (result.value) {
+									if (result.value) {
 
-								window.location = "clientes";
+										window.location = "jugadores";
 
-							}
-						})
+									}
 
-					</script>';
+								})
+
+						</script>';
 
 				}
 
-			} else{
+			}else{
 
 				echo'<script>
 
 					swal({
-
 						  type: "error",
-						  title: "¡El cliente no puede ir vacío o llevar caracteres especiales!",
+						  title: "¡El nombre no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
-
 							if (result.value) {
 
-								window.location = "clientes";
+							window.location = "jugadores";
 
 							}
 						})
 
 			  	</script>';
-
-
 
 			}
 
@@ -252,38 +334,59 @@ class ControladorPlantillaJugadores{
 	}
 
 	/*=============================================
-	ELIMINAR CLIENTE
+	ELIMINAR JUGADOR
 	=============================================*/
 
-	static public function ctrEliminarCliente(){
+	static public function ctrEliminarJugador(){
 
-		if(isset($_GET["idCliente"])){
+		if(isset($_GET['idJugador'])){
+ 
+			if($_GET["idJugador"]){
 
-			$tabla ="clientes";
-			$datos = $_GET["idCliente"];
+				$tabla = 'plantilla';
+				$datos = $_GET['idJugador'];
 
-			$respuesta = ModeloClientes::mdlEliminarCliente($tabla, $datos);
+				var_dump($datos);
 
-			if($respuesta == "ok"){
+				if ($_GET['foto'] != "") {
 
-				echo'<script>
+					// ELIMINA LA FOTO ACTUAL					
+					unlink($_GET['foto']);
 
-				swal({
-					  type: "success",
-					  title: "El cliente fue borrado correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
+					// ELIMINA LA CARPETA
+					rmdir('vistas/img/plantillaJugadores/'.$_GET["aliasFoto"]);
 
-								window.location = "clientes";
+				}
 
-								}
-							})
+				$respuesta = ModeloPlantillaJugadores::mdlEliminarJugador($tabla, $datos);
 
-				</script>';
+				if ($respuesta == "ok") {
+					
+					echo '<script>
 
-			}		
+					swal({
+
+						type: "success",
+						title: "¡El jugador ha sido eliminado correctamente!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false						
+				
+					}).then((result)=>{
+
+						if(result.value){
+
+							window.location = "jugadores";
+
+						}
+
+					})
+
+					</script>';
+
+				}
+
+			}
 
 		}
 

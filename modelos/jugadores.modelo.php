@@ -69,17 +69,16 @@ class ModeloPlantillaJugadores{
 	EDITAR PLANTILLA
 	=============================================*/
 
-	static public function mdlEditarCliente($tabla, $datos){
+	static public function mdlEditarJugador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, numero = :numero, posicion = :posicion, foto = :foto, fecha_nacimiento = :fecha_nacimiento WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, numero = :numero, posicion = :posicion, foto = :foto WHERE id = :id");
 
-		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
 		$stmt->bindParam(":numero", $datos["numero"], PDO::PARAM_STR);
 		$stmt->bindParam(":posicion", $datos["posicion"], PDO::PARAM_STR);
 		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha_nacimiento", $datos["fecha_nacimiento"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -92,42 +91,16 @@ class ModeloPlantillaJugadores{
 		}
 
 		$stmt->close();
-		$stmt = null;
-
-	}
-
-	/*=============================================
-	ACTUALIZAR CLIENTE
-	=============================================*/
-
-	static public function mdlActualizarCliente($tabla, $item1, $valor1, $valor){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item1 = :$item1 WHERE id = :id");
-
-		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
-		$stmt -> bindParam(":id", $valor, PDO::PARAM_STR);
-
-		if($stmt -> execute()){
-
-			return "ok";
-		
-		}else{
-
-			return "error";	
-
-		}
-
-		$stmt -> close();
 
 		$stmt = null;
 
 	}
 
 	/*=============================================
-	ELIMINAR CLIENTE
+	ELIMINAR JUGADOR
 	=============================================*/
 
-	static public function mdlEliminarCliente($tabla, $datos){
+	static public function mdlEliminarJugador($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
