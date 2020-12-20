@@ -147,7 +147,7 @@ MODAL AGREGAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-tag"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="nuevoAlias" name="nuevoAlias" placeholder="Ingresar alias" required>
 
@@ -161,7 +161,7 @@ MODAL AGREGAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-shirtsinbulk"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevoEquipo" placeholder="Ingresar equipo" required>
 
@@ -175,7 +175,7 @@ MODAL AGREGAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-soccer-ball-o"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevoEstadio" placeholder="Ingresar estadio" required>
 
@@ -267,7 +267,7 @@ MODAL EDITAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>                
+                <span class="input-group-addon"><i class="fa fa-tag"></i></span>                
 
                 <input type="text" class="form-control input-lg" id="editarAlias" name="editarAlias" value="" readonly>
                 <input type="hidden" id="idEquipo" name="idEquipo">
@@ -282,7 +282,7 @@ MODAL EDITAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-shirtsinbulk"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="editarEquipo" name="editarEquipo" value="" required>
 
@@ -296,7 +296,7 @@ MODAL EDITAR EQUIPO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-soccer-ball-o"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="editarEstadio" name="editarEstadio" placeholder="Editar estadio" value="" required>
 

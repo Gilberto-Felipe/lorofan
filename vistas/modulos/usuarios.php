@@ -24,7 +24,7 @@
 
             <div class="box-header with-border">
 
-                <button class="btn btn-primary" id="btnAgregarUsuario" data-toggle="modal"
+                <button class="btn btn-success" id="btnAgregarUsuario" data-toggle="modal"
                     data-target="#modalAgregarUsuario">Agregar usuario</button>
 
             </div>
@@ -138,7 +138,7 @@ MODAL AGREGAR USUARIO
       CABEZA DEL MODAL
       ======================================-->
 
-                <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#00a65a; color:white">
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -249,7 +249,7 @@ MODAL AGREGAR USUARIO
 
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-                    <button type="submit" class="btn btn-primary">Guardar usuario</button>
+                    <button type="submit" class="btn btn-success">Guardar usuario</button>
 
                 </div>
 
@@ -285,7 +285,7 @@ MODAL EDITAR USUARIO
       CABEZA DEL MODAL
       ======================================-->
 
-                <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#00a65a; color:white">
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -400,7 +400,7 @@ MODAL EDITAR USUARIO
 
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-                    <button type="submit" class="btn btn-primary">Modificar usuario</button>
+                    <button type="submit" class="btn btn-success">Modificar usuario</button>
 
                 </div>
 

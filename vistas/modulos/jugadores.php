@@ -164,7 +164,7 @@ MODAL AGREGAR JUGADOR
             
             <div class="input-group">
             
-              <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+              <span class="input-group-addon"><i class="fa fa-tag"></i></span> 
 
               <input type="text" class="form-control input-lg" name="nuevoApellido" placeholder="Ingresar apellido" required>
 
@@ -184,7 +184,7 @@ MODAL AGREGAR JUGADOR
                   
                   <div class="input-group">
                   
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-sticky-note-o"></i></span> 
 
                     <input type="text" class="form-control input-lg" name="nuevoNumero" placeholder="Ingresar número" required>
 
@@ -202,7 +202,7 @@ MODAL AGREGAR JUGADOR
                   
                   <div class="input-group">
                   
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-sort"></i></span> 
 
                     <input type="text" class="form-control input-lg" name="nuevaPosicion" placeholder="Ingresar posición" required>
 

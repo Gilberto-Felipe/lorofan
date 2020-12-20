@@ -1,15 +1,1 @@
-<?php 
-
-require_once "controladores/plantilla.controlador.php";
-require_once "controladores/usuarios.controlador.php";
-require_once "controladores/equipos.controlador.php";
-require_once "controladores/calendario.controlador.php";
-require_once "controladores/jugadores.controlador.php";
-
-require_once "modelos/usuarios.modelo.php";
-require_once "modelos/equipos.modelo.php";
-require_once "modelos/calendario.modelo.php";
-require_once "modelos/jugadores.modelo.php";
-
-$plantilla = new ControladorPlantilla();
-$plantilla -> ctrPlantilla();
+<?php  require_once "controladores/plantilla.controlador.php"; require_once "controladores/usuarios.controlador.php"; require_once "controladores/equipos.controlador.php"; require_once "controladores/calendario.controlador.php"; require_once "controladores/jugadores.controlador.php"; require_once "modelos/usuarios.modelo.php"; require_once "modelos/equipos.modelo.php"; require_once "modelos/calendario.modelo.php"; require_once "modelos/jugadores.modelo.php"; $plantilla = new ControladorPlantilla(); $plantilla -> ctrPlantilla();
