@@ -3,53 +3,59 @@
 
 <div class="login-box">
 
-  <div class="login-logo">
+    <div class="login-logo">
 
-    <img src="vistas/img/plantilla/logo-blanco-bloque.png" class="img-responsive" style="padding:30px 100px 0px 100px" alt="logo">
+        <img src="vistas/img/plantilla/logo_lorofan_sm.png" class="img-responsive" style="width:20%;margin:auto;"
+            alt="logo">
 
-  </div>
+    </div>
 
-  <div class="login-box-body">
+    <div class="login-box-body">
 
-    <p class="login-box-msg">Inicia sesión</p>
+        <p class="login-box-msg">Inicia sesión</p>
 
-    <form method="post">
+        <form method="post">
 
-      <div class="form-group has-feedback">
+            <div class="form-group has-feedback">
 
-        <input type="text" class="form-control" placeholder="Usuario" name="ingUsuario" required>
+                <input type="text" class="form-control" placeholder="Usuario" name="ingUsuario" required>
 
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
-      </div>
+            </div>
 
-      <div class="form-group has-feedback">
+            <div class="form-group has-feedback">
 
-        <input type="password" class="form-control" placeholder="Contraseña" name="ingPassword" required>
+                <input type="password" class="form-control" placeholder="Contraseña" name="ingPassword" required>
 
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
-      </div>
+            </div>
 
-      <div class="row">
+            <div class="box text-center">
+                <p class="">usuario: admin</p>
+                <p class="">contraseña: 123</p>
+            </div>
 
-        <div class="col-xs-4">
+            <div class="row">
 
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
+                <div class="col-xs-4">
 
-        </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
 
-      </div>
+                </div>
 
-      <?php 
+            </div>
 
-        // !$login = new ControladorUsuarios();
-        // !$login -> ctrIngresoUsuario();
+            <?php 
 
-       ?>
+                $login = new ControladorUsuarios();
+                $login -> ctrIngresoUsuario();
 
-    </form>
+            ?>
 
-  </div><!-- /.login-box-body -->
+        </form>
+
+    </div><!-- /.login-box-body -->
 
 </div><!-- /.login-box -->

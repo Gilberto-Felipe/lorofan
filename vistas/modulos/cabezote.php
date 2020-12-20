@@ -9,14 +9,14 @@
 		<!-- logo mini -->
 		<span class="logo-mini">
 			
-			<img src="vistas/img/plantilla/icono-blanco.png" class="img-responsive" style="padding:10px" alt="logo empresa">
+			<img src="vistas/img/plantilla/logo_lorofan_sm.png" class="img-responsive" style="padding:10px" alt="logo empresa">
 
 		</span>
 
 		<!-- logo normal -->
 		<span class="logo-lg">
 			
-			<img src="vistas/img/plantilla/logo-blanco-lineal.png" class="img-responsive" style="padding:10px 0px" alt="logo empresa">
+			<img src="vistas/img/plantilla/logo_ghapps_lg.png" class="img-responsive" style="max-width:50%; padding:10px 0px" alt="logo empresa">
 
 		</span>
 			
@@ -45,26 +45,26 @@
 
 						<?php 
 
-							/*if ($_SESSION['foto'] != "") {
+							if ($_SESSION['foto'] != "") {
 								
-								echo '<img src="'.$_SESSION["foto"].'" class="user-image" alt="imagen usuario por default">';
+								echo '<img src="'.$_SESSION["foto"].'" class="user-image" alt="imagen de usuario">';
 
 							} else {
 
-								echo '<img src="vistas/img/usuarios/default/anonymous.png" class="user-image" alt="imagen usuario por default">';
+								echo '<img src="vistas/img/usuarios/admin.jpg" class="user-image" alt="imagen de usuario por defecto">';
 
-							}*/
+							}
 
 						 ?>					
 
-						<span class="hidden-xs"><?php /*echo $_SESSION['nombre'];*/ ?></span>
+						<span class="hidden-xs"><?php echo $_SESSION['nombre']; ?></span>
 
 					</a>
 
 			      	<!-- Dropdown-toggle -->
 			      	<ul class="dropdown-menu">
 			      		
-						<li class="user-body">
+						<li class="">
 							
 							<div class="pull-right">
 								
